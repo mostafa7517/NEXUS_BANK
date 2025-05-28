@@ -1,0 +1,372 @@
+﻿@model BankSystem.ViewModels.CustomerDashboardViewModel
+@using System
+@{
+    ViewData["Title"] = "Dashboard";
+    var username = Context.Session.GetString("Username");
+}
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Banking System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style> 
+
+         body {
+            background: #ffffff;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-image:url('../img/c14.jpg');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+            background-attachment:fixed;
+              /* height:  100vh; */
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            /* background: rgba(255,255,255,0.95); */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+
+        .card:hover {
+            /* transform: translateY(-5px); */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+                /* background-color:#003366; */
+                /* color:white; */
+        }
+        .btn {
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            /* background-color:  #e0e6f0; */
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+                   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .table-responsive {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .badge {
+            padding: 0.5em 0.8em;
+            border-radius: 20px;
+        }
+        .amount-positive {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .amount-negative {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    
+             .welcome-header {
+            background-color: #003366;
+            border-radius: 15px 15px 0 0;
+        }
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+        }
+
+           .list-group-item {
+            border-radius: 8px !important;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+        .list-group-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .action-button {
+            height: 60px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .account{
+            width:80%;
+            margin-left:10%;
+            margin-top:1%;
+        }
+        .cards{
+             width:90%;
+             margin-left:5%;
+            margin-top: 1%;
+        }
+    
+
+       .cards .card-header{
+           height:5vh;
+        }
+
+            .cards .card-header i{
+                margin-left:2%;
+                margin-top:1%;
+            }
+
+            .cards .btn{
+                background-color:#003366;
+            }
+
+        .transaction-card {
+                width:90%;
+                margin-left:5%;
+                height:50vh;
+            }
+            .transaction-card .card-header{
+                height: 7vh;
+            }
+
+            .transaction-card .card-header span {
+                    margin-left: 2%;
+                    margin-top: .5%;
+                }
+
+                
+
+        </style>
+</head>
+
+
+<bode>
+    <div class="container mt-5">
+        <div class="container mt-5">
+            <!-- Last login -->
+            <div class="card-footer text-muted text-end">
+                Last login: @DateTime.Now.ToString("f")
+            </div>
+
+        <!-- Welcome Section -->
+        <div class="card shadow-sm border mb-4">
+            <div class="card-header welcome-header text-white text-center">
+                <h4 class="mb-0"><i class="fas fa-user-circle"></i> Welcome , @username 👋</h4>
+            </div>
+        </div>
+
+            <!-- Quick Actions -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body text-center">
+                        <a asp-controller="Transaction" asp-action="Deposit" class="btn btn-outline-secondary  w-100 action-button">
+                            💰 Deposit Funds
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body text-center">
+                        <a asp-controller="Transaction" asp-action="Withdraw" class="btn  btn-outline-secondary w-100 action-button">
+                                    💲  Withdraw Funds
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body text-center">
+                        <a asp-controller="Transaction" asp-action="Transfer" class="btn btn-outline-secondary w-100 action-button">
+                                 📤 Transfer Money
+                        </a>
+                    </div>
+                </div>
+            </div>
+              </div>
+        </div>
+
+    <div class="row g-3 mb-4">
+
+
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body text-center">
+                    <a asp-controller="Appointment" asp-action="Index" class="btn btn-outline-secondary  w-100 action-button">
+                                      ⌚ Manage Appointments
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body text-center">
+                    <a asp-controller="Card" asp-action="Index" class="btn btn-outline-secondary w-100 action-button">
+                                          💳 Manage Cards
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body text-center">
+                        <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger w-100 action-button">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- Account Details -->
+    <div class="account">
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            <i class="fas fa-user-cog"></i> Account Details
+        </div>
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <tr><th><i class="fas fa-hashtag"></i> Account ID</th><td>@Model.Account.Id</td></tr>
+                <tr><th><i class="fas fa-user"></i> Customer Name</th><td>@Model.Account.Customer?.Name</td></tr>
+                <tr><th><i class="fas fa-coins"></i> Balance</th><td class="balance-display">@Model.Account.Balance.ToString("C")</td></tr>
+            </table>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- My Cards -->
+    <div class="cards">
+
+    <div class="cards mb-4">
+        <div class="card-header bg-dark text-white">
+            <i class="fas fa-credit-card"></i> My Cards (3)
+        </div>
+            <div class="card-body">
+                @if (Model.CardCount > 0)
+                {
+                    <ul class="list-group">
+                        @foreach (var c in Model.Cards)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                @($"**** **** **** {c.CardNumber.Substring(c.CardNumber.Length - 4)}")
+                                @if (c.IsActive)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Blocked</span>
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-muted">You have no issued cards.</p>
+                }
+                <a asp-controller="Card" asp-action="Index" class="btn btn-primary mt-3">Manage All Cards</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction History -->
+    <div class="transaction-card">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <span>📜 Transaction History</span>
+            <a asp-controller="Customer" asp-action="TransactionHistory" class="btn btn-sm btn-light">View All</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>From</th>
+                        <th>To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var t in Model.Transactions.Take(5))
+                    {
+                        <tr>
+                            <td>@t.Date.ToString("MM/dd/yyyy HH:mm")</td>
+                            <td>
+                                @{
+                                    string badgeClass = t.Type switch
+                                    {
+                                        "Deposit" => "bg-success",
+                                        "Withdrawal" => "bg-warning",
+                                        "Transfer" => "bg-info",
+                                        _ => "bg-secondary"
+                                    };
+                                }
+                                <span class="badge @badgeClass">@t.Type</span>
+                            </td>
+                            <td class="@(t.Type == "Deposit" || t.Type == "Transfer" && t.ReceiverAccountId == Model.Account.Id ? "text-success" : "text-danger")">
+                                @(t.Type == "Deposit" || (t.Type == "Transfer" && t.ReceiverAccountId == Model.Account.Id) ? "+" : "-")@t.Amount.ToString("C")
+                            </td>
+                            <td>
+                                @{
+                                    var fromText = t.Type switch
+                                    {
+                                        "Deposit" => "External Account",
+                                        "Withdrawal" => t.SenderAccount?.Customer?.Name ?? "Your Account",
+                                        "Transfer" => t.SenderAccount?.Customer?.Name ?? "Your Account",
+                                        _ => "Unknown"
+                                    };
+                                }
+                                @fromText
+                            </td>
+                            <td>
+                                @{
+                                    var toText = t.Type switch
+                                    {
+                                        "Deposit" => t.ReceiverAccount?.Customer?.Name ?? "Your Account",
+                                        "Withdrawal" => "External Account",
+                                        "Transfer" => t.ReceiverAccount?.Customer?.Name ?? "Unknown Account",
+                                        _ => "Unknown"
+                                    };
+                                }
+                                @toText
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+   
+
+</bode>
+</html>
+
+@* <div class="container mt-5">
+    <!-- Last login -->
+    <div class="card-footer text-muted text-end">
+        Last login: @DateTime.Now.ToString("f")
+    </div>
+ *@

@@ -1,0 +1,484 @@
+﻿@{
+    ViewData["Title"] = "Security";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureBank - Your Security is Our Priority</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            color: white;
+  background-image: url('../img/c1.jpg');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+  height: 80vh;
+  color: var(--text);
+  font-family: 'Montserrat', Arial, sans-serif;
+  background-attachment:fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+
+        .navbar {
+            background-color: #003366;
+            border: 3px solid #FFF2F2;
+            border-radius: 30px;
+            padding: 10px 30px;
+            margin: 10px auto;
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+            .logo img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .logo .highlight {
+                color: #d0d0ff;
+            }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+            .nav-links a {
+                color: white;
+                cursor: pointer;
+                transition: 0.3s;
+                padding: 6px 16px;
+                border-radius: 20px;
+                font-family: "Tagesschrift", system-ui;
+                font-size: 1.2rem;
+                text-decoration: none;
+            }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+            .auth-buttons a {
+                background-color: #FFF2F2;
+                color: #2D336B;
+                border: none;
+                border-radius: 20px;
+                padding: 6px 16px;
+                cursor: pointer;
+                font-family: "Tagesschrift", system-ui;
+            }
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: left;
+        }
+
+        .hero-content {
+            background: rgba(0, 51, 102, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 60px;
+            border-radius: 20px;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            background: linear-gradient(45deg, #66ccff, #99ddff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        /* How We Protect Section */
+        .protection-section {
+            padding: 80px 0;
+        }
+
+            .protection-section h2 {
+                font-size: 36px;
+                margin-bottom: 20px;
+                color: #66ccff;
+            }
+
+        .protection-intro {
+            font-size: 18px;
+            margin-bottom: 60px;
+            opacity: 0.9;
+            max-width: 800px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-card:first-child {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+
+        .feature-card:nth-child(2) {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+        }
+
+        .feature-card:last-child {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+        }
+
+        .feature-card {
+            background: rgba(0, 51, 102, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .feature-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #66ccff, #4da6d9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+            color: #003366;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #66ccff;
+        }
+
+        .feature-card p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: -100%;
+        }
+
+            .footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+                pointer-events: none;
+            }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flogo {
+            background: rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .bank-name {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+            .contact-item:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid transparent;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .footer-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Animated background pattern */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: radial-gradient(circle at 20% 50%, rgba(102, 204, 255, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(102, 204, 255, 0.2) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(102, 204, 255, 0.2) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <!-- <img src="logo.png" alt="Logo" /> -->
+                <span>NexusBank</span>
+            </div>
+            <ul class="nav-links">
+                <a href="/Home/Index">Home</a>
+                <a href="/Home/Careers">Careers</a>
+                <a href="/Home/About">About</a>
+                <a href="/Home/Security">Security</a>
+            </ul>
+            <div class="auth-buttons">
+                <a class="btn" href="/Account/Register">Sign Up</a>
+                <a class="btn" href="/Account/Login">Login</a>
+            </div>
+        </nav>
+
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Your Security is Our Top Priority</h1>
+                    <p>At SecureBank, we understand the importance of keeping your financial information safe and secure. Our advanced security measures and cutting-edge technology ensure that your personal data and transactions are protected at all times.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="protection-section">
+            <div class="container">
+                <h2>How We Protect You</h2>
+                <p class="protection-intro">
+                    We employ multiple layers of security and use the most advanced encryption technology to ensure your information is protected at every step of the way. Our comprehensive security infrastructure keeps your data safe and secure.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure Online Banking Platform</h3>
+                        <p>Our banking platform employs bank-level security with 256-bit SSL encryption to protect all your online transactions. Advanced firewalls and intrusion detection systems monitor and protect against unauthorized access attempts.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3>Multi-Factor Authentication</h3>
+                        <p>We use advanced multi-factor authentication including biometric verification, SMS codes, and hardware tokens. This ensures that only you can access your account, providing an additional layer of security beyond traditional passwords.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">👁</div>
+                        <h3>Fraud Monitoring</h3>
+                        <p>Our sophisticated fraud detection system monitors your account 24/7 for suspicious activities. Machine learning algorithms analyze transaction patterns to identify and prevent fraudulent activities before they can affect your account.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-top">
+                    <div class="logo-section">
+                        <div class="flogo">NB</div>
+                        <h2 class="bank-name">Nexus Bank</h2>
+                    </div>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                            <span>Nexus@gmail.com</span>
+                        </div>
+
+                        <div class="contact-item">
+                            <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                            </svg>
+                            <span>+20 1300000000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © 2025 Bank All Rights Reserved
+                </div>
+
+                <div class="footer-links">
+                    <a href="/Home/Privacy">Privacy</a>
+                    <div class="divider"></div>
+                    <a href="/Home/Faqs">Faqs</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

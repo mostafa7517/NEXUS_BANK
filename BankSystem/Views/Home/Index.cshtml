@@ -1,0 +1,1660 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    var username = Context.Session.GetString("Username");
+    var role = Context.Session.GetString("Role");
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexus Bank Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Yrsa:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BankSystem.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tagesschrift&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Knewave&display=swap" rel="stylesheet">
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: "Yrsa", serif;
+            background-image: url('../img/c1.jpg');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+            height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            background-color: #003366;
+            border: 3px solid #FFF2F2;
+            border-radius: 30px;
+            padding: 10px 30px;
+            margin: 20px auto;
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+            .logo img {
+                width: 40px;
+                height: 40px;
+                transform: scale(1.5); /* يكبر اللوجو */
+                border-radius: 50%;
+                margin-left: 160%;
+            }
+
+            .logo .highlight {
+                color: #d0d0ff;
+            }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding-right: 35%;
+        }
+
+            .nav-links a {
+                color: #ffffff;
+                cursor: pointer;
+                transition: 0.3s;
+                padding: 6px 16px;
+                border-radius: 20px;
+                font-family: "Tagesschrift", system-ui;
+                font-size: 1.2rem;
+                text-decoration: none;
+            }
+
+          
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+            .auth-buttons a {
+                background-color: #FFF2F2;
+                color: #2D336B;
+                border: none;
+                border-radius: 20px;
+                padding: 6px 16px;
+                cursor: pointer;
+                font-family: "Tagesschrift", system-ui;
+            }
+
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            @* padding: 60px; *@
+            min-height: 70vh;
+            background-color: #ffffffa0;
+            border-radius: 30px;
+        }
+
+        .left-section {
+            max-width: 50%;
+            margin-left: 3%;
+        }
+
+        .badge {
+            background-color: #cfe4f8;
+            color: #1f4e7a;
+            padding: 8px 16px;
+            display: inline-block;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 10%;
+        }
+
+        .left-section h1 {
+            font-size: 45px;
+            margin: 0 0 10px;
+            color: #003e78;
+            font-family: "Berkshire Swash", serif;
+        }
+
+        .left-section h2 span {
+            color: #1b74d3;
+            font-family: "Berkshire Swash", serif;
+        }
+
+        .left-section p {
+            font-size: 20px;
+            color: #333;
+            margin: 20px 0;
+            line-height: 1.5;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 60px;
+            margin-top: 40px;
+            margin-left: 40%;
+        }
+
+        .btn {
+            background-color: #003e78;
+            color: white;
+            border: none;
+            padding: 6px 24px;
+            font-size: 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.1s ease-in;
+            text-decoration: none;
+        }
+
+            .btn:hover {
+                background-color: #ffffff;
+                color: #003e78;
+            }
+
+        .right-section {
+            width: 40%;
+            height: 400px;
+            @* background-color: rgba(255, 255, 255, 0.3); *@
+            border: 2px solid #ffff;
+            border-radius: 20px;
+            margin-top: 5%;
+            margin-right: 2%;
+            background-image: url('../img/c10.png');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+        }
+
+        .exchange-section {
+            @* background: #e4edf7; *@
+     padding: 20px;
+            border-radius: 15px;
+            max-width: 500px;
+            height: 100%;
+            margin: auto;
+        }
+
+            .exchange-section h3 {
+                margin-top: 6%;
+                margin-left: 23%;
+                font-family: "Berkshire Swash", serif;
+                font-weight: bold;
+                color: #003e78;
+                font-size: 2.4rem;
+            }
+
+        .currency-select {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .currency-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .currency-box label {
+                font-weight: bold;
+                margin-top: 15%;
+                margin-left: 3%;
+                font-size: 1.2rem;
+            }
+
+            .currency-box select, input {
+                padding: 8px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                margin-top: 5%;
+            }
+
+        .amounts {
+            display: flex;
+            gap: 10px;
+            margin-left: 30%;
+            margin-top: 4%;
+        }
+
+        #exchangeButton {
+            padding: 10px;
+            background-color: #252c60dd;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 39%;
+            margin-top: 6%;
+            padding: 7px 25px;
+            font-size: 1.1rem;
+        }
+
+            #exchangeButton:hover {
+                cursor: pointer;
+                color: #ff9090;
+            }
+
+        #result {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+
+        .products {
+            margin-top: 4%;
+            min-height: 100vh;
+            border-radius: 30px;
+        }
+
+        .intro h1 {
+            color: #003366;
+            font-family: "Berkshire Swash", serif;
+            font-size: 4rem;
+            position: relative;
+            display: inline-block;
+            margin-left: 39%;
+        }
+
+        .intro p {
+            font-size: 1.5rem;
+            max-width: 750px;
+            margin: 0 auto 40px;
+            color: #555;
+            font-family: "Rosarivo", cursive;
+            font-style: italic;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -2%;
+            margin-right: 5%;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: #e0e6f0;
+            color: #003366;
+            border-radius: 30px;
+            margin-left: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+            .tab.active {
+                background: #003366;
+                color: white;
+            }
+
+        .product-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            padding: 0px 30px;
+            @* min-height: 400px; /* Prevent layout shift */ *@
+        }
+
+            .product-section.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .product {
+            flex: 1 1 calc(33.333% - 30px);
+            background: #f0f0f0;
+            padding: 20px 100px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+            .product img {
+                width: 60px;
+                margin-bottom: 20px;
+                color: #7b92a9;
+            }
+
+            .product h3 {
+                color: #295f95;
+                margin-bottom: 10px;
+                font-size: 1.7rem;
+                font-family: "Pacifico";
+            }
+
+            .product p {
+                font-size: 1.2rem;
+                @* font-weight: bold; *@
+            }
+
+        .hidden {
+            display: none;
+        }
+
+        .use-case {
+            height: 100vh;
+        }
+
+            .use-case .intro {
+                margin-top: 5%;
+            }
+
+        .right-side {
+            width: 40%;
+            height: 400px;
+            @* background-color: rgba(255, 255, 255, 0.3); *@
+            @* border: 2px solid #ffff; *@
+            @* border-radius: 20px; *@
+            margin-top: -24%;
+            margin-left: 52%;
+        }
+
+        .description {
+            margin-bottom: 30px;
+            line-height: 1.7;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+            .description span {
+                color: #1661ac;
+                font-size: 1.7rem;
+            }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: solid #ffff;
+            border-radius: 30px;
+            padding: 20px;
+        }
+
+
+
+        .percent-sign {
+            font-size: 2.2rem;
+            margin-left: 2px;
+            color: #ffff;
+        }
+
+        .animated-number {
+            font-size: 3rem;
+            color: #145494;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #292929;
+            line-height: 1.4;
+            font-weight: bold;
+        }
+
+
+        .left-side {
+            width: 33%;
+            height: 55%;
+            margin-left: 12%;
+            border: solid #003366;
+            border-radius: 30px;
+            background-color: #003366;
+        }
+
+            .left-side .contain {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* عمودين بس */
+                gap: 1px;
+                max-width: 500px; /* نحدد العرض عشان العناصر ميجوش جمب بعض كلهم */
+                margin: auto;
+            }
+
+
+        .item {
+            background: #ffffffb0;
+            color: white;
+            @* padding: 20px 60px; *@
+    text-align: center;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10%;
+            margin-left: 5%;
+            width: 90%;
+            height: 87%;
+        }
+
+            .item img {
+                width: 70px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 50%; /* يخلي الصورة دائرية */
+                margin-bottom: -150%;
+                margin-top: -110%;
+                border: 1px solid;
+            }
+
+            .item h1 {
+                font-size: 1.3rem;
+                margin-top: 35%;
+                color: #003366;
+            }
+
+
+
+
+
+        .right {
+            width: 33%;
+            height: 55%;
+            margin-left: 55.5%;
+            margin-top: 6%;
+            border: solid #003366;
+            border-radius: 30px;
+            background-color: #003366;
+        }
+
+            .right .contain {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* عمودين بس */
+                gap: 1px;
+                max-width: 500px; /* نحدد العرض عشان العناصر ميجوش جمب بعض كلهم */
+                margin: auto;
+            }
+
+
+        .item {
+            background: #ffffffb0;
+            color: white;
+            @* padding: 20px 60px; *@
+            text-align: center;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10%;
+            margin-left: 5%;
+            width: 90%;
+            height: 87%;
+        }
+
+            .item img {
+                width: 70px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 50%; /* يخلي الصورة دائرية */
+                margin-bottom: -150%;
+                margin-top: -110%;
+                border: 1px solid;
+            }
+
+            .item h1 {
+                font-size: 1.3rem;
+                margin-top: 35%;
+                color: #003366;
+            }
+
+
+
+
+        .left {
+            width: 40%;
+            height: 400px;
+            @* background-color: rgba(255, 255, 255, 0.3); *@
+            @* border: 2px solid #ffff; *@
+            @* border-radius: 20px; *@
+            margin-top: -24%;
+            margin-left: 8%;
+        }
+
+        .description {
+            margin-bottom: 30px;
+            line-height: 1.7;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+            .description span {
+                color: #1661ac;
+                font-size: 1.7rem;
+            }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: solid #ffff;
+            border-radius: 30px;
+            padding: 20px;
+        }
+
+
+
+        .percent-sign {
+            font-size: 2.2rem;
+            margin-left: 2px;
+            color: #ffff;
+        }
+
+        .animated-number {
+            font-size: 3rem;
+            color: #145494;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #292929;
+            line-height: 1.4;
+            font-weight: bold;
+        }
+
+        .video-background {
+            position: relative;
+            width: 93%;
+            height: 90vh; /* أو حجم القسم اللي انت عايزه */
+            overflow: hidden;
+            margin-left: 4%;
+        }
+
+            .video-background video {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                min-width: 100%;
+                min-height: 100%;
+                width: auto;
+                height: auto;
+                z-index: -1;
+                transform: translate(-50%, -50%);
+                object-fit: cover;
+            }
+
+        .featuer {
+            @* padding: 2rem; *@
+      margin-top: -2%;
+            margin-left: 5%;
+            width: 90%;
+            height: 90vh;
+            overflow: hidden; /* يمنع التمرير خارج الـ div */
+            position: relative;
+            @* background-image: url('../img/2.png'); /* ضع هنا رابط الصورة التي تريدها */ *@
+@* background-position: 0px -250px;
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-attachment: fixed;  *@
+        }
+
+
+        .featuer-header {
+            display: flex;
+            gap: 2rem;
+            width: 90%;
+            margin-left: 5%;
+            margin-top: 9%;
+        }
+
+        .featuer-header .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 200px;
+            margin-top: 5%;
+        }
+
+        .sidebar button {
+            padding: 1rem;
+            background-color: #003366;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            z-index: 0;
+        }
+
+            .sidebar button:hover {
+                background-color: #ffffffb0;
+                color: #003366;
+            }
+
+        .feauter-container {
+            display: flex;
+        }
+
+        .content {
+            flex: 1;
+            position: relative;
+            min-height: 400px;
+        }
+
+        .featuer-intro h1 {
+            color: #003366;
+            font-family: "Berkshire Swash", serif;
+            font-size: 4rem;
+            position: relative;
+            display: inline-block;
+            margin-left: 39%;
+            margin-top: 30%;
+        }
+
+        h1 span {
+            color: #1661ac;
+        }
+
+        .featuer-intro p {
+            font-size: 1.5rem;
+            max-width: 750px;
+            margin: 0 560px 40px;
+            color: #555;
+            font-family: "Rosarivo", cursive;
+            font-style: italic;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+            .features.active {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+        .feature-box {
+            @* background-color: rgba(118, 154, 255, 0.503); *@
+      padding: 2rem;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.42rem;
+            transition: transform 0.3s ease;
+            margin-left: 10%;
+            @* font-family: "Berkshire Swash", serif; *@
+        font-family: "Knewave", system-ui;
+        }
+
+            .feature-box small {
+                font-size: 1.1rem;
+                font-family: "Rosarivo", cursive;
+                @* font-weight: bold; *@
+            }
+
+            .feature-box:hover {
+                transform: translateY(-5px);
+            }
+
+
+        .testimonials-section {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .testimonials-title {
+            color: #003366;
+            font-family: "Berkshire Swash", serif;
+            font-size: 4rem;
+            position: relative;
+            display: inline-block;
+            margin-left: %;
+            margin-top: 3%;
+        }
+
+        .testimonials-subtitle {
+            font-size: 1.3rem;
+            min-width: 750px;
+            margin: 0 220px 40px;
+            color: #555;
+            font-family: "Rosarivo", cursive;
+            font-style: italic;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        }
+
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            width: 30%;
+            align-items: center;
+            @* margin-left: 50%; *@
+        }
+
+        .tab-button {
+            padding: 2px 30px;
+            border: none;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: #7f8c8d;
+        }
+
+            .tab-button.active {
+                background: linear-gradient(135deg, #003366 0%, #667eea 100%);
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            }
+
+        .testimonials-slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonials-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 200%;
+        }
+
+        .testimonials-group {
+            display: flex;
+            width: 50%;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .testimonial-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+            .testimonial-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+                background: linear-gradient(135deg, #003366 0%, #667eea 100%);
+                color: #ffffff;
+            }
+
+                .testimonial-card:hover .testimonial-text {
+                    color: white;
+                }
+
+                .testimonial-card:hover .testimonial-author {
+                    color: white;
+                }
+
+                .testimonial-card:hover .quote-icon {
+                    color: rgba(255, 255, 255, 0.7);
+                }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #34495e;
+            margin-bottom: 25px;
+            font-style: italic;
+            font-family: "Rosarivo", cursive;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            font-family: "Berkshire Swash", serif;
+        }
+
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .nav-button {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+            .nav-button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            }
+
+            .nav-button:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+        .footer {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+                pointer-events: none;
+            }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flogo {
+            background: rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .bank-name {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+            .contact-item:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid transparent;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .footer-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+
+<header>
+    <nav class="navbar">
+       
+        <div class="logo">
+            <img src="/img/nav.jpg" alt="Logo" />
+        </div>
+        <ul class="nav-links">
+            <a href="/Home/Index">Home</a>
+            <a href="/Home/Careers">Careers</a>
+            <a href="/Home/About">About</a>
+            <a href="/Home/Security">Security</a>
+        </ul>
+
+    </nav>
+
+</header>
+
+<body>
+
+    <div class="container">
+
+        <div class="left-section">
+            <div class="badge">🔵 No LLC Required, No Credit Check.</div>
+            <h1>Welcome to Nexus Bank</h1><br>
+            <h2>Empowering Your <span>Financial</span> <span>Journey</span></h2>
+            <p>At Nexus Bank, our mission is to provide comprehensive banking solutions that empower individuals and businesses to achieve their financial goals. We are committed to delivering personalized and innovative services that prioritize our customers’ needs.</p>
+
+            <div class="button-group">
+                <a class="btn" href="/Account/Register">Sign Up</a>
+                <a class="btn" href="/Account/Login">Login</a>
+            </div>
+        </div>
+
+        @* ---------------------------------------------------- *@
+
+        <div class="right-section">
+            <div class="exchange-section">
+                <h3>Money Exchange</h3>
+
+                <div class="currency-select">
+                    <div class="currency-box">
+                        <label for="from">From</label>
+                        <select id="from">
+                            <option value="USD">🇺🇸 USD</option>
+                            <option value="EGP">🇪🇬 EGP</option>
+                            <option value="EUR">💶 EUR</option>
+                            <option value="GBP">💷 GBP</option>
+                            <option value="BTC">₿ BTC</option>
+                            <option value="JPY">🇯🇵 JPY</option>
+                        </select>
+                    </div>
+
+                    <div class="currency-box">
+
+                        <label for="to">To</label>
+                        <select id="to">
+                            <option value="EGP">🇪🇬 EGP</option>
+                            <option value="USD">🇺🇸 USD</option>
+                            <option value="EUR">💶 EUR</option>
+                            <option value="GBP">💷 GBP</option>
+                            <option value="BTC">₿ BTC</option>
+                            <option value="JPY">🇯🇵 JPY</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="amounts">
+                    <input type="number" id="amount" placeholder="Enter amount" />
+                </div>
+                <button id="exchangeButton">Exchange</button>
+
+                <p id="result"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="products">
+        <div class=" intro">
+            <h1>Our <span style="color:#1572d6;">Products</span></h1>
+            <p>Discover a range of comprehensive and customizable banking products at YourBank, designed to suit your unique financial needs and aspirations</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="individual">For Individuals</div>
+            <div class="tab" data-tab="business">For Businesses</div>
+        </div>
+
+        <!-- Individuals Section -->
+        <div id="individual" class="product-section show">
+            <div class="product">
+                <img src="https://img.icons8.com/ios-filled/50/briefcase.png" alt="Checking">
+                <h3>Checking Accounts</h3>
+                <p>Enjoy easy and convenient access to your funds with our range of checking account options. Benefit from features such as online and mobile banking, debit cards, and free ATM access.</p>
+            </div>
+            <div class="product">
+                <img src="https://img.icons8.com/ios-filled/50/safe.png" alt="Savings">
+                <h3>Savings Accounts</h3>
+                <p>Build your savings with our competitive interest rates and flexible savings account options. Whether you're saving for a goal or want to grow wealth, we have the right account.</p>
+            </div>
+            <div class="product">
+                <img src="https://img.icons8.com/ios-filled/50/money-bag.png" alt="Loans">
+                <h3>Loans and Mortgages</h3>
+                <p>Realize your dreams with our flexible loan and mortgage options. From personal loans to home mortgages, our experienced officers help guide you through the process.</p>
+            </div>
+        </div>
+
+        <!-- Business Section -->
+        <div id="business" class="product-section hidden">
+            <div class="product">
+                <img src="https://img.icons8.com/ios-filled/50/commercial.png" alt="Business Checking">
+                <h3>Business Accounts</h3>
+                <p>Manage your business finances with ease using our dedicated business checking and savings accounts, designed for all business sizes.</p>
+            </div>
+            <div class="product">
+                <img src="https://img.icons8.com/ios-filled/50/investment.png" alt="Business Loans">
+                <h3>Business Loans</h3>
+                <p>Get the capital you need to grow your business with our range of business loan solutions, including lines of credit, equipment financing, and more.</p>
+            </div>
+            <div class="product">
+                <img src="https://img.icons8.com/ios-filled/50/online-store.png" alt="Merchant Services">
+                <h3>Merchant Services</h3>
+                <p>Accept payments easily and securely with our merchant service solutions including POS systems, online payment gateways, and mobile solutions.</p>
+            </div>
+        </div>
+
+        <div class="use-case">
+
+            <div class=" intro">
+                <h1>Use <span style="color:#1572d6;">Cases</span></h1>
+                <p>At YourBank, we cater to the diverse needs of individuals and businesses alike, offering a wide range of financial solutions</p>
+            </div>
+
+            <div class="left-side">
+                <div class="contain">
+                    <div class="item">
+                        <img src="../img/L1.png" alt="logo">
+                        <h1>Managing Personal Finances</h1>
+                    </div>
+                    <div class="item">
+                        <img src="../img/L2.png" alt="logo">
+                        <h1>Saving for the Future</h1>
+                    </div>
+                    <div class="item">
+                        <img src="../img/L3.png" alt="logo">
+                        <h1>Homeownership</h1>
+                    </div>
+                    <div class="item">
+                        <img src="../img/L4.png" alt="logo">
+                        <h1>Education<br> Funding</h1>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-side">
+                <p class="description">
+                    <span>For Individuals,</span> our mortgage services cover the way for homeownership, and our flexible personal base provider will support during vertical life milestones. We also prioritize retirement planning, ensuring a financial, serious future for our customers.
+                </p>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <span class="animated-number" data-target="78">0</span>
+                            <span class="percent-sign">%</span>
+                        </div>
+                        <div class="stat-label">Secure Retirement Planning</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <span class="animated-number" data-target="63">0</span>
+                            <span class="percent-sign">%</span>
+                        </div>
+                        <div class="stat-label">Manageable Debt Consolidation</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <span class="animated-number" data-target="91">0</span>
+                            <span class="percent-sign">%</span>
+                        </div>
+                        <div class="stat-label">Reducing Financial Burdens</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="right">
+                <div class="contain">
+                    <div class="item">
+                        <img src="../img/L5.png" alt="logo">
+                        <h1>Startups and Entrepreneurs</h1>
+                    </div>
+                    <div class="item">
+                        <img src="../img/L6.png" alt="logo">
+                        <h1>Cash Flow Management</h1>
+                    </div>
+                    <div class="item">
+                        <img src="../img/L7.png" alt="logo">
+                        <h1>Business Expansion</h1>
+                    </div>
+                    <div class="item">
+                        <img src="../img/L8.png" alt="logo">
+                        <h1>Payment <br>Solutions</h1>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="left">
+
+                <p class="description">
+                    <span>For businesses,</span> we empower growth with working capital solutions that optimize cash flow, and our tailored financing options fuel business expansion. Whatever your financial aspirations, YourBank is committed to providing the right tools and support to achieve them
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <span class="animated-number" data-target="65">0</span>
+                            <span class="percent-sign">%</span>
+                        </div>
+                        <div class="stat-label">Cash Flow Management</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <span class="animated-number" data-target="70">0</span>
+                            <span class="percent-sign">%</span>
+                        </div>
+                        <div class="stat-label">Drive Business Expansion</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <span class="animated-number" data-target="45">0</span>
+                            <span class="percent-sign">%</span>
+                        </div>
+                        <div class="stat-label">Streamline payroll processing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="featuer-intro">
+            <h1>Our <span>Features</span></h1>
+            <p>Experience a host of powerful features at Nexus Bank...</p>
+        </div>
+        <div class="video-background">
+
+            <video autoplay muted loop playsinline>
+                <source src="../img/v1.mp4" type="video/mp4">
+            </video>
+
+            <div class="featuer">
+
+                <div class="featuer-header">
+                    <div class="sidebar">
+                        <button onclick="showFeatures('online')">Online Banking</button>
+                        <button onclick="showFeatures('tools')">Financial Tools</button>
+                        <button onclick="showFeatures('support')">Customer Support</button>
+                    </div>
+
+                    <div class="content">
+                        <div id="online" class="features active">
+                            <div class="feature-box">24/7 Account Access<br><small>Enjoy the convenience of accessing your accounts anytime, anywhere through our secure online banking platform.</small></div>
+                            <div class="feature-box">Book appointment<br><small>No need to wait your turn . Now u can book appointment throw the website Now!!</small></div>
+                            <div class="feature-box">Secure Transactions<br><small> We employ encryption and multi-factor authentication to safeguard your financial information..</small></div>
+                            <div class="feature-box">Bill Pay and Transfers<br><small>Save time and avoid late fees with our convenient bill pay service.</small></div>
+                            <div class="feature-box">Create your account online!<br><small>Now u can just fill a simple form and just like that you became  a client At the most used bank in Egypt.</small></div>
+                            <div class="feature-box">Easy card management<br><small>easily mange your cards from here</small></div>
+                        </div>
+
+                        <div id="tools" class="features">
+                            <div class="feature-box">Budget Planner<br><small>Track your income and expenses easily.</small></div>
+                            <div class="feature-box">Loan Calculator<br><small>Calculate your loan payments instantly.</small></div>
+                            <div class="feature-box">Investment Tracker<br><small>Monitor your investments and returns.</small></div>
+                            <div class="feature-box">Savings Goals<br><small>Set and track your savings milestones.</small></div>
+                            <div class="feature-box">Currency Converter<br><small>Real-time currency exchange rates.</small></div>
+                            <div class="feature-box">Spending Insights<br><small>Analyze your spending behavior.</small></div>
+                        </div>
+
+                        <div id="support" class="features">
+                            <div class="feature-box">Live Chat Support<br><small>Connect with an agent 24/7.</small></div>
+                            <div class="feature-box">Branch Locator<br><small>Find the nearest Nexus Bank branch.</small></div>
+                            <div class="feature-box">FAQ Center<br><small>Get answers to common questions.</small></div>
+                            <div class="feature-box">Dispute Resolution<br><small>Report and resolve issues fast.</small></div>
+                            <div class="feature-box">Account Recovery<br><small>Recover your account in a few steps.</small></div>
+                            <div class="feature-box">Feedback Portal<br><small>Share your experience and suggestions.</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="testimonials-section">
+
+            <div class="testimonials-container">
+                <div class="testimonials-header">
+                    <h2 class="testimonials-title">Testimonials</h2>
+                    <p class="testimonials-subtitle">
+                        Discover how Nexus Bank has transformed lives with innovative digital solutions and personalized customer service. See why our clients trust us for a secure and prosperous financial journey
+                    </p>
+                </div>
+
+                <div class="tabs-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" onclick="switchTab('individuals')">For Individuals</button>
+                        <button class="tab-button" onclick="switchTab('businesses')">For Businesses</button>
+                    </div>
+                </div>
+
+                <div class="testimonials-slider">
+                    <div class="testimonials-track" id="testimonialsTrack">
+                        <!-- شهادات الأفراد -->
+                        <div class="testimonials-group" id="individuals">
+                            <div class="testimonial-card">
+                                <div class="quote-icon">"</div>
+                                <p class="testimonial-text">
+                                    YourBank has been my trusted financial partner for years. Their personalized service and innovative digital banking solutions have made managing my finances a breeze.
+                                </p>
+                                <div class="testimonial-author">Sara T</div>
+                            </div>
+
+                            <div class="testimonial-card">
+                                <div class="quote-icon">"</div>
+                                <p class="testimonial-text">
+                                    I recently started my own business, and YourBank has been instrumental in helping me set up my business accounts and secure the financing I needed. Their expert guidance and tailored solutions have been invaluable.
+                                </p>
+                                <div class="testimonial-author">John D</div>
+                            </div>
+
+                            <div class="testimonial-card">
+                                <div class="quote-icon">"</div>
+                                <p class="testimonial-text">
+                                    I love the convenience of YourBank's mobile banking app. It allows me to stay on top of my finances and make transactions on the go. The app is user-friendly and secure, giving me peace of mind.
+                                </p>
+                                <div class="testimonial-author">Emily G</div>
+                            </div>
+                        </div>
+
+                        <!-- شهادات الشركات -->
+                        <div class="testimonials-group" id="businesses">
+                            <div class="testimonial-card">
+                                <div class="quote-icon">"</div>
+                                <p class="testimonial-text">
+                                    As a growing company, we needed a banking partner that could scale with us. Nexus Bank's corporate solutions and dedicated relationship manager have been game-changers for our financial operations.
+                                </p>
+                                <div class="testimonial-author">Ahmed M - CEO, TechCorp</div>
+                            </div>
+
+                            <div class="testimonial-card">
+                                <div class="quote-icon">"</div>
+                                <p class="testimonial-text">
+                                    The trade finance solutions provided by Nexus Bank have streamlined our international operations. Their expertise in cross-border transactions has been instrumental in our global expansion.
+                                </p>
+                                <div class="testimonial-author">Maria L - CFO, GlobalTrade Ltd</div>
+                            </div>
+
+                            <div class="testimonial-card">
+                                <div class="quote-icon">"</div>
+                                <p class="testimonial-text">
+                                    Nexus Bank's cash management platform has revolutionized how we handle our finances. The real-time insights and automated processes have improved our efficiency significantly.
+                                </p>
+                                <div class="testimonial-author">David K - Finance Director, InnovateTech</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-main">
+                    <div class="footer-top">
+                        <div class="logo-section">
+                            <div class="flogo">NB</div>
+                            <h2 class="bank-name">Nexus Bank</h2>
+                        </div>
+
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                </svg>
+                                <span>Nexus@gmail.com</span>
+                            </div>
+
+                            <div class="contact-item">
+                                <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                </svg>
+                                <span>+20 1300000000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <div class="copyright">
+                        © 2025 Bank All Rights Reserved
+                    </div>
+
+                    <div class="footer-links">
+                        <a href="/Home/Privacy">Privacy</a>
+                        <div class="divider"></div>
+                        <a href="/Home/Faqs">Faqs</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            function showFeatures(id) {
+              document.querySelectorAll('.features').forEach(div => {
+                div.classList.remove('active');
+              });
+              const active = document.getElementById(id);
+              setTimeout(() => {
+                active.classList.add('active');
+              }, 10);
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+              const tabs = document.querySelectorAll('.tab');
+              const sections = {
+                individual: document.getElementById('individual'),
+                business: document.getElementById('business')
+              };
+
+              tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                  tabs.forEach(t => t.classList.remove('active'));
+                  tab.classList.add('active');
+
+                  Object.keys(sections).forEach(key => {
+                    sections[key].classList.add('hidden');
+                    sections[key].classList.remove('show');
+                  });
+
+                  const targetId = tab.getAttribute('data-tab');
+                  const targetSection = sections[targetId];
+                  targetSection.classList.remove('hidden');
+
+                  setTimeout(() => {
+                    targetSection.classList.add('show');
+                  }, 10);
+                });
+              });
+            });
+
+
+               // Number animation function
+                function animateNumbers() {
+                    const numberElements = document.querySelectorAll('.animated-number');
+                    const speed = 300; // lower is faster
+
+                    numberElements.forEach(element => {
+                        const target = parseInt(element.getAttribute('data-target'));
+                        const increment = target / speed;
+                        let current = 0;
+
+                        const updateNumber = () => {
+                            current += increment;
+                            if (current < target) {
+                                element.textContent = Math.floor(current);
+                                setTimeout(updateNumber, 1);
+                            } else {
+                                element.textContent = target;
+                            }
+                        };
+
+                        // Start animation when element is in viewport
+                        const observer = new IntersectionObserver((entries) => {
+                            if (entries[0].isIntersecting) {
+                                updateNumber();
+                                observer.unobserve(element);
+                            }
+                        });
+
+                        observer.observe(element);
+                    });
+                }
+
+                // Run animation when page loads
+                window.addEventListener('load', animateNumbers);
+
+
+
+                  let currentTab = 'individuals';
+                let currentSlide = 0;
+                const maxSlides = 1; // نحتاج slide واحد فقط لكل مجموعة
+
+                function switchTab(tab) {
+                    const buttons = document.querySelectorAll('.tab-button');
+                    const track = document.getElementById('testimonialsTrack');
+
+                    // تحديث الأزرار
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    event.target.classList.add('active');
+
+                    // تحديث المحتوى
+                    currentTab = tab;
+                    currentSlide = 0;
+
+                    if (tab === 'individuals') {
+                        track.style.transform = 'translateX(0%)';
+                    } else {
+                        track.style.transform = 'translateX(-50%)';
+                    }
+
+                    updateNavButtons();
+                }
+
+                function nextSlide() {
+                    // يمكن إضافة المزيد من الشرائح هنا إذا لزم الأمر
+                    if (currentSlide < maxSlides) {
+                        currentSlide++;
+                        updateSlider();
+                    }
+                }
+
+                function previousSlide() {
+                    if (currentSlide > 0) {
+                        currentSlide--;
+                        updateSlider();
+                    }
+                }
+
+                function updateSlider() {
+                    const track = document.getElementById('testimonialsTrack');
+                    const baseTransform = currentTab === 'individuals' ? 0 : -50;
+                    track.style.transform = 'translateX(${baseTransform}%)';
+                    updateNavButtons();
+                }
+
+            
+         
+        </script>
+        <script>
+            const rates = {
+              USD: {
+                EGP: 50.74,
+                EUR: 0.88,
+                GBP: 0.75,
+                BTC: 0.000010,
+                JPY: 143.97,
+              },
+            };
+
+            // توليد كل التحويلات من USD
+            for (const to in rates.USD) {
+              const value = rates.USD[to];
+              if (!rates[to]) rates[to] = {};
+              rates[to]["USD"] = 1 / value;
+            }
+
+            // بناء باقي التحويلات
+            const currencies = ["EGP", "EUR", "GBP", "BTC", "JPY"];
+            for (let from of currencies) {
+              for (let to of currencies) {
+                if (from !== to) {
+                  rates[from][to] = rates[from]["USD"] * rates["USD"][to];
+                }
+              }
+            }
+
+            function convert() {
+              const from = document.getElementById("from").value;
+              const to = document.getElementById("to").value;
+              const amount = parseFloat(document.getElementById("amount").value);
+
+              if (isNaN(amount) || !rates[from] || !rates[from][to]) {
+                document.getElementById("result").innerText = "Please enter a valid amount and select supported currencies.";
+                return;
+              }
+
+              const result = amount * rates[from][to];
+              document.getElementById("result").innerText = `${amount} ${from} = ${result.toFixed(2)} ${to}`;
+            }
+
+            document.getElementById("exchangeButton").addEventListener("click", convert);
+
+
+
+            document.querySelector('.navbar-toggle').addEventListener('click', function() {
+            document.querySelector('.navbar-links').classList.toggle('active');
+});
+        </script>
+
+</body>
+</html>

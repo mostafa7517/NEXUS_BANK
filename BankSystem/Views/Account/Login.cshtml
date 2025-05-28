@@ -1,0 +1,760 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"] - Nexus Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts for Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary: #7ea1ce;
+            --secondary: #bdd7ee;
+            --deep-blue: #285686;
+            --header-bg: #c3daf4;
+            --footer-bg: #7ea1ce;
+            --footer-light: #c3daf4;
+            --white: #f8f8fa;
+            --text: #19557b;
+        }
+
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            margin: 0;
+            /* background: var(--white) url('https://cdn.vectorstock.com/i/500p/52/71/laptop-computer-with-stock-market-background-vector-25695271.avif') no-repeat center center fixed;
+            background-size: cover; */
+            color: var(--text);
+            background-image: url('../img/c1.jpg');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+            height: 100vh;
+            background-attachment: fixed;
+
+        }
+
+        .navbar {
+            background-color: #003366;
+            border: 3px solid #FFF2F2;
+            border-radius: 30px;
+            padding: 10px 30px;
+            margin: 20px auto;
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+            .logo img {
+                width: 40px;
+                height: 40px;
+                transform: scale(1.5); /* يكبر اللوجو */
+                border-radius: 50%;
+                margin-left: 160%;
+            }
+
+            .logo .highlight {
+                color: #d0d0ff;
+            }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding-right: 35%;
+        }
+
+            .nav-links a {
+                color: #ffffff;
+                cursor: pointer;
+                transition: 0.3s;
+                padding: 6px 16px;
+                border-radius: 20px;
+                font-family: "Tagesschrift", system-ui;
+                font-size: 1.2rem;
+                text-decoration: none;
+            }
+
+     
+        /* Login Card */
+        .login-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 73vh;
+            margin: 48px 0 0 0;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            padding: 46px 42px 46px 42px;
+            min-width: 375px;
+            max-width: 410px;
+            color: #fff;
+            box-shadow: 0 8px 32px #7ea1ce22;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 44px;
+        }
+
+            .login-card h2 {
+                color: #2a5782;
+                text-align: center;
+                font-size: 2.1rem;
+                font-weight: 700;
+                margin-bottom: 18px;
+            }
+
+            .login-card p {
+                text-align: center;
+                margin-bottom: 22px;
+                color: #2a5782;
+                font-size: 1.11rem;
+                font-weight: bold;
+            }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .login-label {
+            font-size: 0.99em;
+            color: #2a5782;
+            font-weight: 600;
+            margin-bottom: 5px;
+            margin-left: 4px;
+        }
+
+        .login-input-row {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        .login-input-icon {
+            font-size: 1.15em;
+            background: var(--secondary);
+            color: var(--deep-blue);
+            border-radius: 25px 0 0 25px;
+            padding: 0 16px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            border: none;
+            border-right: 1.5px solid #7ea1ce44;
+        }
+
+        .login-input {
+            border: none;
+            background:white;
+            border-radius: 0 25px 25px 0;
+            padding: 13px 48px 13px 20px;
+            font-size: 1rem;
+            width: 100%;
+            color: var(--text);
+            outline: none;
+            font-family: inherit;
+            box-sizing: border-box;
+            height: 46px;
+            transition: background 0.1s;
+        }
+
+            .login-input:focus {
+                background: #e6f0fa;
+            }
+        /* Fix for Password Eye Icon */
+        .login-pw-wrap {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-eye-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.15em;
+            color: #233d55;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            opacity: 0.77;
+            z-index: 2;
+            padding: 0;
+            margin: 0;
+            height: 22px;
+            width: 27px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-btn-main {
+            width: 100%;
+            margin: 10px 0 6px 0;
+            padding: 15px 0;
+            border-radius: 32px;
+            font-size: 1.11rem;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+            background: var(--deep-blue);
+            color: #fff;
+            transition: background 0.16s;
+        }
+
+            .login-btn-main:hover {
+                background: #13335a;
+            }
+
+        .login-forgot, .login-register {
+            color: #13335a;
+            text-decoration: none;
+            font-size: 0.99em;
+            transition: color 0.18s;
+        }
+
+            .login-forgot:hover, .login-register:hover {
+                color: #214d79;
+            }
+
+        .text-danger, .validation-summary-errors, .field-validation-error {
+            color: #dc3545 !important;
+            font-size: 0.96em;
+            background: transparent !important;
+        }
+
+        .alert-success {
+            background-color: #aef1ae;
+            color: #185518;
+            border-radius: 15px;
+            padding: 0.6em 1em;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 1.04em;
+        }
+
+        .alert-danger {
+            background-color: #fad2d2;
+            color: #d21414;
+            border-radius: 15px;
+            padding: 0.6em 1em;
+            margin-top: 0.9em;
+            text-align: center;
+            font-size: 1.04em;
+        }
+
+        /* --- Testimonials Section --- */
+        .testimonials-section {
+            margin: 70px auto 44px auto;
+            width: 100%;
+            text-align: center;
+        }
+
+            .testimonials-section h2 {
+                font-size: 2.3rem;
+                color: var(--deep-blue);
+                font-weight: 700;
+                margin-bottom: 0px;
+                margin-top: 0;
+                display: inline-block;
+                letter-spacing: 0.01em;
+            }
+
+        .toggle-group {
+            margin: 18px auto 22px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2em;
+            background: var(--primary);
+            padding: 0.25em 0.44em;
+            max-width: 350px;
+            gap: 6px;
+        }
+
+        .toggle-btn {
+            padding: 0.6em 2.1em;
+            border-radius: 1.3em;
+            background: var(--secondary);
+            font-size: 1.03em;
+            font-weight: 600;
+            color: #232c3a;
+            border: none;
+            margin: 0.23em 0.1em;
+            transition: background 0.16s, color 0.12s, box-shadow 0.13s;
+            cursor: pointer;
+            outline: none;
+            min-width: 140px;
+        }
+
+            .toggle-btn.inactive {
+                background: transparent;
+                color: #f3f3f3;
+                font-weight: 400;
+            }
+
+            .toggle-btn:focus,
+            .toggle-btn:hover {
+                background: var(--deep-blue);
+                color: #fff;
+                box-shadow: 0 1px 10px #bdd7ee44;
+            }
+
+        .carousel {
+            background: var(--primary);
+            border-radius: 55px;
+            padding: 32px 20px;
+            margin: 0 auto 40px auto;
+            display: flex;
+            align-items: center;
+            max-width: 1100px;
+            min-height: 260px;
+            position: relative;
+            box-sizing: border-box;
+            justify-content: center;
+        }
+
+        .carousel-cards {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            margin: 0 1em;
+        }
+
+        .carousel-card {
+            background: var(--secondary);
+            border-radius: 26px;
+            flex: 1;
+            padding: 25px 22px 28px 22px;
+            margin: 0 8px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 230px;
+            min-height: 167px;
+            color: var(--deep-blue);
+            font-size: 1.04rem;
+            align-items: center;
+            position: relative;
+        }
+
+            .carousel-card .quote {
+                font-size: 2.3em;
+                font-weight: bold;
+                color: #194873;
+                margin-bottom: 10px;
+                margin-top: -22px;
+                line-height: 0.6;
+            }
+
+        .card-content {
+            margin-bottom: 18px;
+        }
+
+        .carousel-card .author {
+            font-weight: 700;
+            color: #194873;
+            margin-top: 14px;
+            font-size: 1.1em;
+            letter-spacing: .01em;
+            text-align: right;
+            width: 100%;
+        }
+
+        /* --- Footer Section (copied from original for completeness) --- */
+        .footer {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+                pointer-events: none;
+            }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flogo {
+            background: rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .bank-name {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+            .contact-item:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid transparent;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .footer-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+    </style>
+</head>
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/img/nav.jpg" alt="Logo" />
+        </div>
+        <ul class="nav-links">
+            <a href="/Home/Index">Home</a>
+            <a href="/Home/Careers">Careers</a>
+            <a href="/Home/About">About</a>
+            <a href="/Home/Security">Security</a>
+        </ul>
+
+    </nav>
+
+</header>
+<body>
+    <!-- Header -->
+
+    <!-- Main Login Card -->
+    <div class="login-section">
+        <div class="login-card">
+            <h2>Welcome Back</h2>
+            <p>Sign in to securely access your Nexus Bank account.</p>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert-success">@TempData["SuccessMessage"]</div>
+            }
+
+            <form asp-action="Login" method="post" class="login-form">
+                <div>
+                    <label class="login-label" for="username">Username</label>
+                    <div class="login-input-row">
+                        <span class="login-input-icon"><i class="fa fa-user"></i></span>
+                        <input id="username" name="username" class="login-input" required placeholder="Enter your username" autocomplete="username" />
+                    </div>
+                </div>
+                <div>
+                    <label class="login-label" for="password">Password</label>
+                    <div class="login-input-row login-pw-wrap">
+                        <span class="login-input-icon"><i class="fa fa-lock"></i></span>
+                        <input id="password" name="password" type="password" class="login-input" required placeholder="Enter your password" autocomplete="current-password" />
+                        <button id="togglePasswordBtn" class="login-eye-icon" type="button" tabindex="-1">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; margin-top:2px;">
+                    <a asp-action="ResetPassword" class="login-forgot">reset password?</a>
+                </div>
+                <button type="submit" class="login-btn-main">Login</button>
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert-danger">@ViewBag.ErrorMessage</div>
+                }
+                <div style="margin-top: 14px; text-align: center;">
+                    <span style="color:#fff;">Don't have an account?</span>
+                    <a asp-action="Register" class="login-register">Register now</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="testimonials-section">
+        <h2>Our <span style="color:#285686">Testimonials</span></h2>
+        <div class="toggle-group" id="testimonialToggle">
+            <button class="toggle-btn active" type="button" id="indivBtn">For Individuals</button>
+            <button class="toggle-btn inactive" type="button" id="bizBtn">For Businesses</button>
+        </div>
+        <div class="carousel" id="testimonialCarousel">
+            <div class="carousel-cards" id="carouselCards">
+                <!-- Content handled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-top">
+                    <div class="logo-section">
+                        <div class="flogo">NB</div>
+                        <h2 class="bank-name">Nexus Bank</h2>
+                    </div>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                            <span>Nexus@gmail.com</span>
+                        </div>
+
+                        <div class="contact-item">
+                            <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                            </svg>
+                            <span>+20 1300000000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © 2025 Bank All Rights Reserved
+                </div>
+
+                <div class="footer-links">
+                    <a href="/Home/Privacy">Privacy</a>
+                    <div class="divider"></div>
+                    <a href="/Home/Terms">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- script -->
+    <script>
+        function toggleLoginPassword(event) {
+            var input = document.getElementById("password");
+            var eye = event.currentTarget.querySelector('i');
+            if (input.type === "password") {
+                input.type = "text";
+                eye.classList.remove('fa-eye');
+                eye.classList.add('fa-eye-slash');
+            } else {
+                input.type = "password";
+                eye.classList.remove('fa-eye-slash');
+                eye.classList.add('fa-eye');
+            }
+        }
+
+        // Testimonials content & logic
+        const individualsTestimonials = [
+            {
+                author: "Sara T",
+                content: "Nexus Bank has been my trusted financial partner for years. Their personalized service and innovative digital banking solutions have made managing my finances a breeze."
+            },
+            {
+                author: "John D",
+                content: "I recently started my own business, and Nexus Bank has been instrumental in helping me set up my business accounts and secure the financing I needed. Their expert guidance and tailored solutions have been invaluable."
+            },
+            {
+                author: "Emily G",
+                content: "I love the convenience of Nexus Bank’s mobile banking app. It allows me to stay on top of my finances and make transactions on the go. The app is user-friendly and secure, giving me peace of mind."
+            }
+        ];
+        const businessTestimonials = [
+            {
+                author: "AlfaTech Solutions",
+                content: "Working with Nexus Bank was the smartest move for our growth. Their corporate team understands exactly what businesses need."
+            },
+            {
+                author: "Eastern Traders Ltd.",
+                content: "We trust Nexus Bank’s business services to keep operations smooth and help us seize new opportunities in the market."
+            },
+            {
+                author: "GreenFuture Energy",
+                content: "Nexus Bank offered us tailored financing options that actually care about our environmental goals. Reliable and highly recommended."
+            }
+        ];
+        const carouselCards = document.getElementById('carouselCards');
+        const indivBtn = document.getElementById('indivBtn');
+        const bizBtn = document.getElementById('bizBtn');
+
+        function renderTestimonials(type) {
+            carouselCards.innerHTML = '';
+            const list = type === "business" ? businessTestimonials : individualsTestimonials;
+            for (const t of list) {
+                carouselCards.innerHTML += `
+                <div class="carousel-card">
+                <div class="quote">“</div>
+                <div class="card-content">${t.content}</div>
+                <div class="author">${t.author}</div>
+                </div>
+            `;
+            }
+        }
+
+        indivBtn.addEventListener('click', function () {
+            indivBtn.classList.add('active'); indivBtn.classList.remove('inactive');
+            bizBtn.classList.remove('active'); bizBtn.classList.add('inactive');
+            renderTestimonials("individuals");
+        });
+        bizBtn.addEventListener('click', function () {
+            bizBtn.classList.add('active'); bizBtn.classList.remove('inactive');
+            indivBtn.classList.remove('active'); indivBtn.classList.add('inactive');
+            renderTestimonials("business");
+        });
+
+        // Initialize testimonials
+        renderTestimonials("individuals");
+
+
+
+               function toggleLoginPassword(event) {
+          const passwordInput = document.getElementById("password");
+          const icon = event.currentTarget.querySelector("i");
+
+          if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+          } else {
+            passwordInput.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+          }
+        }
+
+    </script>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

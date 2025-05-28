@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "New Card";
+    var accounts = (List<BankSystem.Data.BankAccount>)ViewBag.Accounts;
+    var types = (List<BankSystem.Models.CardType>)ViewBag.CardTypes;
+}
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Yrsa:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
+    </head>
+
+<style>
+    body{
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* background: linear-gradient(135deg, #003366 0%, #764ba2 100%); */
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+             background-image: url('../img/c14.jpg');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+            background-attachment: fixed;
+    }
+    .navbar {
+  background-color: #003366;
+ border: 3px solid #FFF2F2;
+  border-radius: 30px;
+  padding: 10px 30px;
+  margin: 20px auto ;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top:-10%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+    transform: scale(1.5); /* يكبر اللوجو */
+border-radius: 50%;
+margin-left:160% ;
+}
+
+.logo .highlight {
+  color: #d0d0ff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin:0;
+  padding-right:35%;
+}
+
+.nav-links a {
+  color:#ffffff;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-family: "Tagesschrift", system-ui;
+  font-size:1.2rem;
+              text-decoration: none;
+
+}
+
+
+   h2{
+       margin-top:5%;
+        font-family: "Berkshire Swash", serif;
+    }
+
+  
+    </style>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+             <img src="/img/nav.jpg" alt="Logo" /> 
+            </div>
+            <ul class="nav-links">
+                <a href="/Home/Index">Home</a>
+                <a href="/Home/Careers">Careers</a>
+                <a href="/Home/About">About</a>
+                <a href="/Home/Security">Security</a>
+            </ul>
+           
+        </nav>
+
+    </header>
+<h2>Issue New Card</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label for="accountId" class="form-label">Select Account</label>
+        <select name="accountId" class="form-select" required>
+            <option value="">-- choose --</option>
+            @foreach (var a in accounts)
+            {
+                <option value="@a.Id">Acct #@a.Id (@a.Balance:C)</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="type" class="form-label">Card Type</label>
+        <select name="type" class="form-select" required>
+            <option value="">-- choose --</option>
+            @foreach (var t in types)
+            {
+                <option value="@t">@t</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Create Card</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

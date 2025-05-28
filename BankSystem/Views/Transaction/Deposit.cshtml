@@ -1,0 +1,448 @@
+﻿@{
+    ViewData["Title"] = "Deposit";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Deposit Form</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #003366 0%, #764ba2 100%);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+      
+        }
+
+        .deposit-container {
+            width: 100%;
+            max-width: 450px;
+            margin-left:33%;
+         
+        }
+
+        .deposit-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 51, 102, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+        }
+
+            .deposit-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #003366, #0066cc, #003366);
+                background-size: 200% 100%;
+                animation: shimmer 3s ease-in-out infinite;
+            }
+
+      
+
+        .deposit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0, 51, 102, 0.2);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #003366 0%, #004080 100%);
+            color: white;
+            padding: 32px 32px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .card-header::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+                animation: rotate 20s linear infinite;
+            }
+
+       
+
+        .card-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+      
+
+        .card-body {
+            padding: 40px 32px;
+        }
+
+        .form-group {
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #003366;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #f8f9ff;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+            .input-wrapper:hover {
+                border-color: rgba(0, 51, 102, 0.3);
+                background: #f0f4ff;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(0, 51, 102, 0.1);
+            }
+
+            .input-wrapper.focused {
+                border-color: #003366;
+                background: white;
+                box-shadow: 0 0 0 4px rgba(0, 51, 102, 0.1);
+            }
+
+        .currency-symbol {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #003366;
+            font-size: 1.4rem;
+            font-weight: 700;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 20px 20px 20px 60px;
+            border: none;
+            background: transparent;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #003366;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+            .amount-input::placeholder {
+                color: #6b7280;
+                font-weight: 500;
+            }
+
+        .deposit-button {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #003366 0%, #0066cc 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+            .deposit-button::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+                transition: left 0.6s ease;
+            }
+
+            .deposit-button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 35px rgba(0, 51, 102, 0.4);
+                background: linear-gradient(135deg, #004080 0%, #0080ff 100%);
+            }
+
+                .deposit-button:hover::before {
+                    left: 100%;
+                }
+
+            .deposit-button:active {
+                transform: translateY(-1px);
+                box-shadow: 0 8px 20px rgba(0, 51, 102, 0.3);
+            }
+
+        .button-icon {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .deposit-button:hover .button-icon {
+            transform: translateX(4px);
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0, 51, 102, 0.05);
+            animation: float 6s ease-in-out infinite;
+        }
+
+            .floating-circle:nth-child(1) {
+                width: 80px;
+                height: 80px;
+                top: 20%;
+                left: 10%;
+                animation-delay: 0s;
+            }
+
+            .floating-circle:nth-child(2) {
+                width: 60px;
+                height: 60px;
+                top: 60%;
+                right: 15%;
+                animation-delay: 2s;
+            }
+
+            .floating-circle:nth-child(3) {
+                width: 40px;
+                height: 40px;
+                bottom: 20%;
+                left: 20%;
+                animation-delay: 4s;
+            }
+
+
+        .success-feedback {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1000;
+            font-weight: 600;
+        }
+
+            .success-feedback.show {
+                transform: translateX(0);
+            }
+
+       
+    </style>
+</head>
+<body>
+    <div class="deposit-container">
+        <div class="deposit-card">
+            <div class="floating-elements">
+                <div class="floating-circle"></div>
+                <div class="floating-circle"></div>
+                <div class="floating-circle"></div>
+            </div>
+
+            <div class="card-header">
+                <div class="header-icon">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+                <h2>Deposit Money</h2>
+            </div>
+
+            <div class="card-body">
+           <form asp-action="Deposit" method="post">
+                <form id="depositForm">
+                    <div class="form-group">
+                        <label class="form-label" for="amount">
+                            <i class="fas fa-dollar-sign" style="margin-right: 8px;"></i>
+                            Amount to Deposit
+                        </label>
+                        <div class="input-wrapper" id="inputWrapper">
+                            <span class="currency-symbol">$</span>
+                            <input type="number"
+                                   name="amount"
+                                   id="amount"
+                                   class="amount-input"
+                                   step="0.01"
+                                   placeholder="0.00"
+                                   min="0.01"
+                                   required />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="deposit-button" id="depositBtn">
+                        <i class="fas fa-credit-card button-icon"></i>
+                        Deposit Now
+                    </button>
+                </form>
+            </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="success-feedback" id="successFeedback">
+        <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+        Deposit successful!
+    </div>
+
+    <script>
+        const amountInput = document.getElementById('amount');
+        const inputWrapper = document.getElementById('inputWrapper');
+        const depositForm = document.getElementById('depositForm');
+        const depositBtn = document.getElementById('depositBtn');
+        const successFeedback = document.getElementById('successFeedback');
+
+        // Input focus effects
+        amountInput.addEventListener('focus', () => {
+            inputWrapper.classList.add('focused');
+        });
+
+        amountInput.addEventListener('blur', () => {
+            inputWrapper.classList.remove('focused');
+        });
+
+        // Form submission with animation
+        depositForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const amount = amountInput.value;
+            if (amount && parseFloat(amount) > 0) {
+                // Button loading state
+                depositBtn.innerHTML = '<i class="fas fa-spinner fa-spin button-icon"></i>Processing...';
+                depositBtn.disabled = true;
+
+                // Simulate processing
+                setTimeout(() => {
+                    // Reset button
+                    depositBtn.innerHTML = '<i class="fas fa-check button-icon"></i>Completed!';
+                    depositBtn.style.background = 'linear-gradient(135deg, #10b981, #34d399)';
+
+                    // Show success feedback
+                    successFeedback.classList.add('show');
+
+                    // Reset form after delay
+                    setTimeout(() => {
+                        amountInput.value = '';
+                        depositBtn.innerHTML = '<i class="fas fa-credit-card button-icon"></i>Deposit Now';
+                        depositBtn.style.background = 'linear-gradient(135deg, #003366 0%, #0066cc 100%)';
+                        depositBtn.disabled = false;
+                        successFeedback.classList.remove('show');
+                    }, 3000);
+                }, 2000);
+            }
+        });
+
+        // Input animation on type
+        amountInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            if (value) {
+                inputWrapper.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    inputWrapper.style.transform = 'scale(1)';
+                }, 150);
+            }
+        });
+
+        // Add some interactive particles on hover
+        const card = document.querySelector('.deposit-card');
+        card.addEventListener('mouseenter', () => {
+            card.style.background = 'rgba(255, 255, 255, 1)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.background = 'rgba(255, 255, 255, 0.95)';
+        });
+    </script>
+</body>
+</html>
+
+
+            
+@* <div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Deposit Money</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Deposit" method="post">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Amount</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input name="amount" type="number" step="0.01" class="form-control" required 
+                                       placeholder="Enter amount to deposit" min="0.01" />
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-money-bill-wave me-2"></i>Deposit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@

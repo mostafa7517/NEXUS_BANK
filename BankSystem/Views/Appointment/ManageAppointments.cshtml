@@ -1,0 +1,387 @@
+﻿@model IEnumerable<BankSystem.Data.Appointment>
+@{
+    ViewData["Title"] = "Manage Appointments";
+
+    // Calculate counts for dashboard
+    var pendingCount = Model.Count(a => a.Status == "Pending");
+    var approvedCount = Model.Count(a => a.Status == "Approved");
+    var completedCount = Model.Count(a => a.Status == "Completed");
+    var cancelledCount = Model.Count(a => a.Status == "Cancelled");
+    var totalCount = Model.Count();
+}
+
+
+<style>
+    body{
+        background-image: url('../img/c5.jpg');
+        background-size: cover;
+        background-repeat: repeat;
+        background-position: center;
+        height: 80vh;
+        color: var(--text);
+        font-family: 'Montserrat', Arial, sans-serif;
+    }
+
+
+</style>
+<div class="container mt-5">
+    <!-- Header with actions -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-secondary">📋 Appointment Manager</h2>
+            <p class="text-muted">Review and process customer appointment requests</p>
+        </div>
+        <div>
+            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Status Summary Cards - styled like the employee dashboard -->
+    <div class="row text-center mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white fw-semibold">Pending Requests</div>
+                <div class="card-body">
+                    <h1 class="display-5">@pendingCount</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white fw-semibold">Approved</div>
+                <div class="card-body">
+                    <h1 class="display-5">@approvedCount</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white fw-semibold">Completed</div>
+                <div class="card-body">
+                    <h1 class="display-5">@completedCount</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white fw-semibold">Cancelled</div>
+                <div class="card-body">
+                    <h1 class="display-5">@cancelledCount</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mb-4">
+        <a asp-controller="Employee" asp-action="Dashboard" class="btn btn-outline-secondary btn-lg me-2">
+            🏠 Back to Dashboard
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            There are no appointments to manage at this time.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <!-- Chart -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Appointment Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-pie mb-4" style="height: 250px;">
+                            <canvas id="appointmentChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
+                            <span class="me-2">
+                                <i class="fas fa-circle text-primary"></i> Pending
+                            </span>
+                            <span class="me-2">
+                                <i class="fas fa-circle text-success"></i> Approved
+                            </span>
+                            <span class="me-2">
+                                <i class="fas fa-circle text-info"></i> Completed
+                            </span>
+                            <span>
+                                <i class="fas fa-circle text-danger"></i> Cancelled
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="col-md-8 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light p-0">
+                        <ul class="nav nav-tabs card-header-tabs" id="appointmentTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pending-tab" data-bs-toggle="tab"
+                                        data-bs-target="#pending" type="button" role="tab">
+                                    Pending
+                                    <span class="badge bg-primary">@pendingCount</span>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="approved-tab" data-bs-toggle="tab"
+                                        data-bs-target="#approved" type="button" role="tab">
+                                    Approved
+                                    <span class="badge bg-success">@approvedCount</span>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="completed-tab" data-bs-toggle="tab"
+                                        data-bs-target="#completed" type="button" role="tab">
+                                    Completed
+                                    <span class="badge bg-info">@completedCount</span>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab"
+                                        data-bs-target="#cancelled" type="button" role="tab">
+                                    Cancelled
+                                    <span class="badge bg-danger">@cancelledCount</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="tab-content" id="appointmentTabContent">
+                            <!-- Pending Appointments -->
+                            <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Date & Time</th>
+                                                <th>Purpose</th>
+                                                <th>Notes</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var appointment in Model.Where(a => a.Status == "Pending"))
+                                            {
+                                                <tr>
+                                                    <td>@appointment.Customer.Name</td>
+                                                    <td>@appointment.AppointmentDate.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                                    <td>@appointment.Purpose</td>
+                                                    <td class="text-truncate" style="max-width: 200px;">@appointment.Notes</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm">
+                                                            <form asp-action="UpdateStatus" method="post" class="me-1">
+                                                                <input type="hidden" name="id" value="@appointment.Id" />
+                                                                <input type="hidden" name="status" value="Approved" />
+                                                                <button type="submit" class="btn btn-success"
+                                                                        onclick="return confirm('Are you sure you want to approve this appointment?');">
+                                                                    Approve
+                                                                </button>
+                                                            </form>
+                                                            <form asp-action="UpdateStatus" method="post">
+                                                                <input type="hidden" name="id" value="@appointment.Id" />
+                                                                <input type="hidden" name="status" value="Cancelled" />
+                                                                <button type="submit" class="btn btn-danger"
+                                                                        onclick="return confirm('Are you sure you want to reject this appointment?');">
+                                                                    Reject
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            @if (!Model.Any(a => a.Status == "Pending"))
+                                            {
+                                                <tr>
+                                                    <td colspan="5" class="text-center py-3 text-muted">
+                                                        No pending appointments.
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Approved Appointments -->
+                            <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="approved-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Date & Time</th>
+                                                <th>Purpose</th>
+                                                <th>Notes</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var appointment in Model.Where(a => a.Status == "Approved"))
+                                            {
+                                                <tr>
+                                                    <td>@appointment.Customer.Name</td>
+                                                    <td>@appointment.AppointmentDate.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                                    <td>@appointment.Purpose</td>
+                                                    <td class="text-truncate" style="max-width: 200px;">@appointment.Notes</td>
+                                                    <td>
+                                                        <form asp-action="UpdateStatus" method="post">
+                                                            <input type="hidden" name="id" value="@appointment.Id" />
+                                                            <input type="hidden" name="status" value="Completed" />
+                                                            <button type="submit" class="btn btn-info btn-sm"
+                                                                    onclick="return confirm('Are you sure you want to mark this appointment as completed?');">
+                                                                Mark Completed
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            @if (!Model.Any(a => a.Status == "Approved"))
+                                            {
+                                                <tr>
+                                                    <td colspan="5" class="text-center py-3 text-muted">
+                                                        No approved appointments.
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Completed Appointments -->
+                            <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Date & Time</th>
+                                                <th>Purpose</th>
+                                                <th>Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var appointment in Model.Where(a => a.Status == "Completed"))
+                                            {
+                                                <tr>
+                                                    <td>@appointment.Customer.Name</td>
+                                                    <td>@appointment.AppointmentDate.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                                    <td>@appointment.Purpose</td>
+                                                    <td class="text-truncate" style="max-width: 200px;">@appointment.Notes</td>
+                                                </tr>
+                                            }
+                                            @if (!Model.Any(a => a.Status == "Completed"))
+                                            {
+                                                <tr>
+                                                    <td colspan="4" class="text-center py-3 text-muted">
+                                                        No completed appointments.
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Cancelled Appointments -->
+                            <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Date & Time</th>
+                                                <th>Purpose</th>
+                                                <th>Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var appointment in Model.Where(a => a.Status == "Cancelled"))
+                                            {
+                                                <tr>
+                                                    <td>@appointment.Customer.Name</td>
+                                                    <td>@appointment.AppointmentDate.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                                    <td>@appointment.Purpose</td>
+                                                    <td class="text-truncate" style="max-width: 200px;">@appointment.Notes</td>
+                                                </tr>
+                                            }
+                                            @if (!Model.Any(a => a.Status == "Cancelled"))
+                                            {
+                                                <tr>
+                                                    <td colspan="4" class="text-center py-3 text-muted">
+                                                        No cancelled appointments.
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Auto-dismiss alerts after 5 seconds
+            setTimeout(function () {
+                document.querySelectorAll('.alert').forEach(alert => {
+                    bootstrap.Alert.getOrCreateInstance(alert).close();
+                });
+            }, 5000);
+
+            // Create the pie chart
+            const ctx = document.getElementById('appointmentChart').getContext('2d');
+            const appointmentChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pending', 'Approved', 'Completed', 'Cancelled'],
+                    datasets: [{
+                        data: [@pendingCount, @approvedCount, @completedCount, @cancelledCount],
+                        backgroundColor: [
+                            '#4e73df', // Primary - blue
+                            '#1cc88a', // Success - green
+                            '#36b9cc', // Info - cyan
+                            '#e74a3b'  // Danger - red
+                        ],
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        });
+    </script>
+}

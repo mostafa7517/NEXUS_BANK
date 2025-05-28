@@ -1,0 +1,232 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS BANK Privacy Policy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('../img/c1.jpg');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+            height: 80vh;
+            color: var(--text);
+            font-family: 'Montserrat', Arial, sans-serif;
+            min-height: 100vh;
+            color: white;
+        }
+
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top:10%;
+            margin-left:3%;
+        }
+
+            .auth-buttons a {
+                background-color: #003366;
+                color: #FFF2F2;
+                border: none;
+                border-radius: 20px;
+                padding: 6px 16px;
+                cursor: pointer;
+                font-family: "Tagesschrift", system-ui;
+
+            }
+
+                .auth-buttons a:hover{
+                    background-color: #FFF2F2;
+                    color: #003366;
+                }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+       
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0;
+        }
+
+        .hero-content {
+            background: rgba(0, 51, 102, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: white;
+        }
+
+        .hero .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .hero .date {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* Main Content Section */
+        .main-content {
+            padding: 60px 0;
+        }
+
+        .content-card {
+            background: rgba(0, 51, 102, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #66ccff;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .content-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .info-list {
+            margin: 20px 0;
+        }
+
+            .info-list ul {
+                list-style: none;
+                padding-left: 0;
+            }
+
+            .info-list li {
+                margin-bottom: 15px;
+                padding-left: 20px;
+                position: relative;
+                line-height: 1.5;
+            }
+
+                .info-list li:before {
+                    content: "•";
+                    color: #66ccff;
+                    font-weight: bold;
+                    position: absolute;
+                    left: 0;
+                }
+
+        .highlight-text {
+            color: #66ccff;
+            font-weight: bold;
+        }
+
+        .get-started-link {
+            color: white;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+            .get-started-link:hover {
+                color: #99ddff;
+            }
+
+     
+
+        
+
+        /* Animated background pattern */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: radial-gradient(circle at 20% 50%, rgba(102, 204, 255, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(102, 204, 255, 0.2) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(102, 204, 255, 0.2) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="auth-buttons">
+        <a class="btn" href="/Home/Index">Home</a>
+
+        <a class="btn" href="/Account/Register">Sign Up</a>
+        <a class="btn" href="/Account/Login">Login</a>
+    </div>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="subtitle">NEXUS BANK</div>
+                    <h1>NEXUS BANK Privacy Policy</h1>
+                    <div class="date">This policy is effective 03/10/2025 and may be amended from time to time.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-content">
+            <div class="container">
+                <div class="content-card">
+                    <h2 class="content-title">What NEXUS Does With Your Personal Information</h2>
+
+                    <div class="content-text">
+                        NEXUS will post online any changes to the NEXUS Privacy Policy and the Nexus Website Customer Information Privacy Policy on or before the effective date of such changes. You will be able to determine the date of the last change by noting the revision (Rev.) date of the policy. If you have already notified us of your information sharing preferences, you do not need to notify us again.
+                    </div>
+
+                    <div class="content-text">
+                        To limit our sharing, you can:
+                    </div>
+
+                    <div class="info-list">
+                        <ul>
+                            <li>Call 1-800-762-2118 - our menu will prompt you through your choice(s).</li>
+                            <li>Online Banking Customers - simply sign-on at nexus.com then go to Customer Service > Privacy Preferences to make your choice(s).</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-text">
+                        If you are not currently a NEXUS Online Banking customer, you may click here to "<span class="get-started-link"><a href="/Account/Login">Log in</a></span>" and enroll.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

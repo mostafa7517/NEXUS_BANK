@@ -1,0 +1,593 @@
+﻿@{
+    ViewData["Title"] = "Transfer";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Transfer Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #003366 0%, #001122 50%, #002244 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+       
+
+        
+
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .transfer-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideInUp 0.8s ease-out;
+        }
+
+            .transfer-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            }
+
+        
+
+        .card-header {
+            background: linear-gradient(135deg, #003366, #004477);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .card-header::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                transform: rotate(45deg);
+                animation: shimmer 3s infinite;
+            }
+
+      
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+            .card-title .icon {
+                font-size: 2.2rem;
+                animation: pulse 2s infinite;
+            }
+
+       
+
+        .card-body {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            color: #e0e0e0;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+            .form-input:focus {
+                outline: none;
+                border-color: #66ccff;
+                background: rgba(255, 255, 255, 0.1);
+                box-shadow: 0 0 0 4px rgba(102, 204, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+            .form-input::placeholder {
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            .form-input.invalid {
+                border-color: #ff6b6b;
+                background: rgba(255, 107, 107, 0.1);
+                animation: shake 0.5s ease-in-out;
+            }
+
+    
+
+        .error-message {
+            color: #ff9999;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+            .error-message.show {
+                opacity: 1;
+            }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #003366, #004477, #0066aa);
+            background-size: 200% 200%;
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+            .submit-btn:hover {
+                background-position: 100% 0%;
+                transform: translateY(-3px);
+                box-shadow: 0 15px 30px rgba(0, 51, 102, 0.4);
+            }
+
+            .submit-btn:active {
+                transform: translateY(0);
+            }
+
+            .submit-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.5s;
+            }
+
+            .submit-btn:hover::before {
+                left: 100%;
+            }
+
+        .alert {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 16px;
+            font-weight: 500;
+            animation: slideInDown 0.5s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .alert-success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            color: #a8e6a3;
+        }
+
+        .alert-error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: #ffcdd2;
+        }
+
+        
+
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+      
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .form-group:focus-within .input-icon {
+            color: #66ccff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <div class="container">
+        <div class="transfer-card">
+            <div class="card-header">
+                <h1 class="card-title">
+                    <span class="icon">💸</span>
+                    Transfer Funds
+                </h1>
+            </div>
+
+            <div class="card-body">
+                 <form asp-action="Transfer" method="post" id="transferForm">
+
+                <form id="transferForm">
+                    <div class="form-group">
+                        <label class="form-label">Receiver National ID</label>
+                        <div style="position: relative;">
+                            <input type="text"
+                                   id="ssn"
+                                   name="ssn"
+                                   class="form-input"
+                                   placeholder="Enter 14-digit National ID"
+                                   maxlength="14"
+                                   required>
+                            <span class="input-icon">🆔</span>
+                        </div>
+                        <div class="error-message" id="ssnError">Please enter a valid 14-digit National ID</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Transfer Amount</label>
+                        <div style="position: relative;">
+                            <input type="number"
+                                   id="amount"
+                                   name="amount"
+                                   class="form-input"
+                                   placeholder="0.00"
+                                   step="0.01"
+                                   min="0.01"
+                                   required>
+                            <span class="input-icon">💰</span>
+                        </div>
+                        <div class="error-message" id="amountError">Amount must be greater than 0</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Send Transfer</span>
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+             </form>
+
+                <div id="alertContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create animated background particles
+        function createParticles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                bgAnimation.appendChild(particle);
+            }
+        }
+
+        // Form validation and interaction
+        const form = document.getElementById('transferForm');
+        const ssnInput = document.getElementById('ssn');
+        const amountInput = document.getElementById('amount');
+        const ssnError = document.getElementById('ssnError');
+        const amountError = document.getElementById('amountError');
+        const alertContainer = document.getElementById('alertContainer');
+        const submitBtn = document.querySelector('.submit-btn');
+        const btnText = document.querySelector('.btn-text');
+        const loading = document.querySelector('.loading');
+
+        // Format SSN input to only accept numbers
+        ssnInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '');
+            validateSSN();
+        });
+
+        // Validate SSN
+        function validateSSN() {
+            const isValid = /^\d{14}$/.test(ssnInput.value);
+            if (ssnInput.value.length > 0 && !isValid) {
+                ssnInput.classList.add('invalid');
+                ssnError.classList.add('show');
+            } else {
+                ssnInput.classList.remove('invalid');
+                ssnError.classList.remove('show');
+            }
+            return isValid;
+        }
+
+        // Validate amount
+        function validateAmount() {
+            const value = parseFloat(amountInput.value);
+            const isValid = !isNaN(value) && value > 0;
+            if (amountInput.value.length > 0 && !isValid) {
+                amountInput.classList.add('invalid');
+                amountError.classList.add('show');
+            } else {
+                amountInput.classList.remove('invalid');
+                amountError.classList.remove('show');
+            }
+            return isValid;
+        }
+
+        // Real-time validation
+        amountInput.addEventListener('input', validateAmount);
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const isSSNValid = validateSSN();
+            const isAmountValid = validateAmount();
+
+            if (isSSNValid && isAmountValid) {
+                // Show loading state
+                btnText.style.opacity = '0';
+                loading.style.display = 'block';
+                submitBtn.disabled = true;
+
+                // Simulate API call
+                setTimeout(() => {
+                    btnText.style.opacity = '1';
+                    loading.style.display = 'none';
+                    submitBtn.disabled = false;
+
+                    // Show success message
+                    showAlert('Transfer completed successfully! 🎉', 'success');
+                    form.reset();
+                }, 2000);
+            }
+        });
+
+        // Show alert messages
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = alert alert-${type};
+            alert.textContent = message;
+
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alert);
+
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    alertContainer.removeChild(alert);
+                }, 300);
+            }, 4000);
+        }
+
+        // Initialize particles
+        createParticles();
+
+        // Add floating animation to form elements
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+@* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+<style>
+    .fade-slide {
+        transition: all 0.5s ease-in-out;
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+        .fade-slide.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">🔁 Transfer Funds</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Transfer" method="post" id="transferForm">
+                        <!-- Receiver National ID -->
+                        <div class="mb-3">
+                            <label class="form-label">Receiver National ID</label>
+                            <input name="ssn"
+                                   id="ssn"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="e.g. 30304172500914"
+                                   required
+                                   pattern="\d{14}" />
+                            <div class="invalid-feedback">
+                                Please enter a valid 14-digit ID.
+                            </div>
+                        </div>
+
+                        <!-- Amount -->
+                        <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input name="amount"
+                                   id="amount"
+                                   type="number"
+                                   class="form-control"
+                                   step="0.01"
+                                   min="0.01"
+                                   required />
+                            <div class="invalid-feedback">
+                                Amount must be greater than 0.
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            🚀 Send Transfer
+                        </button>
+                    </form>
+
+                    <!-- Flash messages -->
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div id="errorMsg" class="alert alert-danger mt-3 fade-slide show">
+                            @ViewBag.ErrorMessage
+                        </div>
+                    }
+                    @if (ViewBag.SuccessMessage != null)
+                    {
+                        <div id="successMsg" class="alert alert-success mt-3 fade-slide show">
+                            @ViewBag.SuccessMessage
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('transferForm');
+    const ssn = document.getElementById('ssn');
+    const amount = document.getElementById('amount');
+    // now expecting exactly 14 digits
+    const idRegex = /^\d{14}$/;
+
+    form.addEventListener('submit', function (e) {
+        let valid = true;
+
+        // National ID validation
+        if (!idRegex.test(ssn.value.trim())) {
+            ssn.classList.add('is-invalid');
+            valid = false;
+        } else {
+            ssn.classList.remove('is-invalid');
+        }
+
+        // Amount validation
+        if (amount.value.trim() === '' || parseFloat(amount.value) <= 0) {
+            amount.classList.add('is-invalid');
+            valid = false;
+        } else {
+            amount.classList.remove('is-invalid');
+        }
+
+        if (!valid) {
+            e.preventDefault();
+        }
+    });
+
+    // Auto-hide flash messages after 3s
+    setTimeout(() => {
+        document.getElementById('errorMsg')?.classList.remove('show');
+        document.getElementById('successMsg')?.classList.remove('show');
+    }, 3000);
+</script> *@

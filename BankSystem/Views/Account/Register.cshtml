@@ -1,0 +1,876 @@
+﻿@model BankSystem.Data.Customer
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Account</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #003366 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 51, 102, 0.15);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+            .form-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #003366, #0066cc, #003366);
+                background-size: 200% 100%;
+                animation: gradientShift 3s ease-in-out infinite;
+            }
+
+
+        .form-title {
+            text-align: center;
+            color: #003366;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+            .form-title::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 3px;
+                background: #003366;
+                border-radius: 2px;
+            }
+
+        .section-card {
+            background: #ffffff;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 51, 102, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 51, 102, 0.1);
+        }
+
+            .section-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(0, 51, 102, 0.15);
+            }
+
+        .section-header {
+            background: linear-gradient(135deg, #003366, #004488);
+            color: white;
+            padding: 1.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .section-header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                transition: left 0.5s ease;
+            }
+
+        .section-card:hover .section-header::before {
+            left: 100%;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .section-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #003366;
+            transition: color 0.3s ease;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            position: relative;
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: #003366;
+                box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+                transform: translateY(-2px);
+            }
+
+            .form-control:hover {
+                border-color: #0066cc;
+            }
+
+        .input-group {
+            display: flex;
+            position: relative;
+        }
+
+        .input-group-text {
+            background: #003366;
+            color: white;
+            border: 2px solid #003366;
+            border-right: none;
+            padding: 1rem 1.25rem;
+            border-radius: 12px 0 0 12px;
+            font-weight: 600;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .btn-toggle {
+            background: #003366;
+            color: white;
+            border: 2px solid #003366;
+            border-left: none;
+            padding: 1rem 1.25rem;
+            border-radius: 0 12px 12px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .btn-toggle:hover {
+                background: #0066cc;
+                border-color: #0066cc;
+                transform: scale(1.05);
+            }
+
+        .password-strength {
+            margin-top: 0.5rem;
+        }
+
+        .progress {
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            transition: all 0.4s ease;
+            border-radius: 3px;
+        }
+
+        .strength-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #003366, #0066cc);
+            color: white;
+            border: none;
+            padding: 1.25rem 2rem;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+            .btn-primary::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                transition: left 0.5s ease;
+            }
+
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 25px rgba(0, 51, 102, 0.3);
+            }
+
+                .btn-primary:hover::before {
+                    left: 100%;
+                }
+
+        .btn-secondary {
+            background: transparent;
+            color: #003366;
+            border: 2px solid #003366;
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+
+            .btn-secondary:hover {
+                background: #003366;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(0, 51, 102, 0.2);
+            }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+
+        .row {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .col-md-6 {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .alert {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(0, 51, 102, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+            .floating-element:nth-child(1) {
+                width: 80px;
+                height: 80px;
+                top: 10%;
+                left: 10%;
+                animation-delay: 0s;
+            }
+
+            .floating-element:nth-child(2) {
+                width: 60px;
+                height: 60px;
+                top: 20%;
+                right: 15%;
+                animation-delay: 2s;
+            }
+
+            .floating-element:nth-child(3) {
+                width: 100px;
+                height: 100px;
+                bottom: 15%;
+                left: 15%;
+                animation-delay: 4s;
+            }
+
+       </style>
+</head>
+<body>
+
+
+    @if (!ViewData.ModelState.IsValid)
+
+    {
+        <div class="alert alert-danger">
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+    } 
+
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="main-container">
+        <div class="form-card">
+            <h1 class="form-title">
+                <i class="fas fa-user-plus"></i> Create Your Account
+            </h1>
+
+            <div id="errorAlert" class="alert" style="display: none;">
+                <div id="errorList"></div>
+            </div>
+
+             <form asp-action="Register" method="post" onsubmit="return validatePasswordMatch()">
+
+
+                <!-- Personal Information Section -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-user"></i> Personal Information
+                        </h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Name" class="form-label">Full Name</label>
+                                    <input asp-for="Name" class="form-control" placeholder="John Doe" required />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="DateOfBirth" class="form-label">Date of Birth</label>
+                                    <input asp-for="DateOfBirth" class="form-control" type="date" required />
+                                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="form-label">Email Address</label>
+                                <input asp-for="Email" class="form-control" type="email" placeholder="you@example.com" required />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="123-456-7890" required />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                    <label asp-for="Address" class="form-label">Address</label>
+                    <textarea asp-for="Address" class="form-control" rows="2" placeholder="123 Main St, City, State, ZIP" required></textarea>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                
+
+                <!-- Financial Information Section -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-dollar-sign"></i> Financial Information
+                        </h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                            <label asp-for="SSN" class="form-label">Social Security Number</label>
+                            <input asp-for="SSN" class="form-control" placeholder="XXX-XX-XXXX" />
+                            <span asp-validation-for="SSN" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                            <label asp-for="Occupation" class="form-label">Occupation</label>
+                            <input asp-for="Occupation" class="form-control" placeholder="Software Engineer" />
+                            <span asp-validation-for="Occupation" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                    <label asp-for="AnnualIncome" class="form-label">Annual Income</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input asp-for="AnnualIncome" class="form-control" placeholder="50000" />
+                    </div>
+                    <span asp-validation-for="AnnualIncome" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Credentials Section -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-key"></i> Account Credentials
+                        </h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                    <label asp-for="Username" class="form-label">Username</label>
+                    <input asp-for="Username" class="form-control" placeholder="johndoe123" required />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <input asp-for="Password" type="password" class="form-control" id="password" placeholder="••••••••" required oninput="checkPasswordStrength()" />
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password')">👁</button>
+                    </div>
+                    <div class="progress mt-2" style="height: 5px;">
+                        <div id="passwordStrengthBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <small id="passwordStrengthText" class="text-muted"></small>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="••••••••" required />
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmPassword')">👁</button>
+                    </div>
+                    <span id="passwordError" class="text-danger" style="display:none;">Passwords do not match.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+            <a asp-action="Login" class="btn btn-outline-secondary">Already have an account? Sign In</a>
+
+                </div>
+    
+             </form>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = input.nextElementSibling.querySelector('i');
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function validatePasswordMatch() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const error = document.getElementById("confirmPasswordError");
+
+            if (confirmPassword && password !== confirmPassword) {
+                error.textContent = "Passwords do not match.";
+                error.style.display = "block";
+                return false;
+            } else {
+                error.style.display = "none";
+                return true;
+            }
+        }
+
+        function checkPasswordStrength() {
+            const password = document.getElementById("password").value;
+            const bar = document.getElementById("passwordStrengthBar");
+            const text = document.getElementById("passwordStrengthText");
+
+            let strength = 0;
+            let feedback = [];
+
+            if (password.length >= 8) {
+                strength += 1;
+            } else {
+                feedback.push("At least 8 characters");
+            }
+
+            if (/[A-Z]/.test(password)) {
+                strength += 1;
+            } else {
+                feedback.push("Uppercase letter");
+            }
+
+            if (/[0-9]/.test(password)) {
+                strength += 1;
+            } else {
+                feedback.push("Number");
+            }
+
+            if (/[\W_]/.test(password)) {
+                strength += 1;
+            } else {
+                feedback.push("Special character");
+            }
+
+            let barWidth = strength * 25;
+            let color, label;
+
+            switch (strength) {
+                case 0:
+                case 1:
+                    color = "#dc3545";
+                    label = "Weak";
+                    break;
+                case 2:
+                    color = "#ffc107";
+                    label = "Moderate";
+                    break;
+                case 3:
+                    color = "#17a2b8";
+                    label = "Strong";
+                    break;
+                case 4:
+                    color = "#28a745";
+                    label = "Very Strong";
+                    break;
+            }
+
+            bar.style.backgroundColor = color;
+            bar.style.width = barWidth + '%';
+            text.textContent = label;
+            text.style.color = color;
+
+            if (feedback.length > 0 && password.length > 0) {
+                text.textContent += ` (Need: ${feedback.join(', ')})`;
+            }
+        }
+
+        function validateForm(event) {
+            event.preventDefault();
+
+            let isValid = true;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            // Clear previous errors
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.style.display = 'none';
+            });
+
+            // Validate password match
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").textContent = "Passwords do not match.";
+                document.getElementById("confirmPasswordError").style.display = "block";
+                isValid = false;
+            }
+
+            // Validate password strength
+            if (password.length < 8) {
+                document.getElementById("passwordError").textContent = "Password must be at least 8 characters long.";
+                document.getElementById("passwordError").style.display = "block";
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Simulate form submission
+                const submitBtn = document.querySelector('.btn-primary');
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+                submitBtn.style.background = '#28a745';
+
+                setTimeout(() => {
+                    alert('Account created successfully!');
+                    submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                    submitBtn.style.background = '';
+                }, 2000);
+            }
+
+            return isValid;
+        }
+
+        // Add form animation on load
+        window.addEventListener('load', () => {
+            document.querySelector('.form-card').style.animation = 'fadeIn 0.8s ease-out';
+        });
+
+        // Add input focus animations
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+@* <div class="d-flex justify-content-center align-items-center bg-light" style="min-height: 100vh; padding: 2rem 0;">
+    <div class="card shadow p-4" style="width: 800px; max-width: 95%; border-radius: 1rem;">
+        <h3 class="text-center mb-4">📝 Create Your Account</h3>
+
+        @if (!ViewData.ModelState.IsValid)
+
+        {
+            <div class="alert alert-danger">
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
+        }
+
+        <form asp-action="Register" method="post" onsubmit="return validatePasswordMatch()">
+            <!-- Personal Information Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Personal Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Name" class="form-label">Full Name</label>
+                            <input asp-for="Name" class="form-control" placeholder="John Doe" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DateOfBirth" class="form-label">Date of Birth</label>
+                            <input asp-for="DateOfBirth" class="form-control" type="date" required />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Email" class="form-label">Email Address</label>
+                            <input asp-for="Email" class="form-control" type="email" placeholder="you@example.com" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="123-456-7890" required />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Address" class="form-label">Address</label>
+                        <textarea asp-for="Address" class="form-control" rows="2" placeholder="123 Main St, City, State, ZIP" required></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Information Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Financial Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="SSN" class="form-label">Social Security Number</label>
+                            <input asp-for="SSN" class="form-control" placeholder="XXX-XX-XXXX" />
+                            <span asp-validation-for="SSN" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Occupation" class="form-label">Occupation</label>
+                            <input asp-for="Occupation" class="form-control" placeholder="Software Engineer" />
+                            <span asp-validation-for="Occupation" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="AnnualIncome" class="form-label">Annual Income</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input asp-for="AnnualIncome" class="form-control" placeholder="50000" />
+                        </div>
+                        <span asp-validation-for="AnnualIncome" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Credentials Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Account Credentials</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="Username" class="form-label">Username</label>
+                        <input asp-for="Username" class="form-control" placeholder="johndoe123" required />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <input asp-for="Password" type="password" class="form-control" id="password" placeholder="••••••••" required oninput="checkPasswordStrength()" />
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password')">👁</button>
+                        </div>
+                        <div class="progress mt-2" style="height: 5px;">
+                            <div id="passwordStrengthBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <small id="passwordStrengthText" class="text-muted"></small>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="••••••••" required />
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmPassword')">👁</button>
+                        </div>
+                        <span id="passwordError" class="text-danger" style="display:none;">Passwords do not match.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success">Create Account</button>
+                <a asp-action="Login" class="btn btn-outline-secondary">Already have an account? Sign In</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            input.type = input.type === "password" ? "text" : "password";
+        }
+
+        function validatePasswordMatch() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const error = document.getElementById("passwordError");
+
+            if (password !== confirmPassword) {
+                error.style.display = "block";
+                return false;
+            }
+
+            error.style.display = "none";
+            return true;
+        }
+
+        function checkPasswordStrength() {
+            const password = document.getElementById("password").value;
+            const bar = document.getElementById("passwordStrengthBar");
+            const text = document.getElementById("passwordStrengthText");
+
+            let strength = 0;
+
+            if (password.length >= 8) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[\W_]/.test(password)) strength += 1;
+
+            let barWidth = strength * 25;
+            let color, label;
+
+            switch (strength) {
+                case 0:
+                    color = "bg-danger";
+                    label = "Very Weak";
+                    break;
+                case 1:
+                    color = "bg-danger";
+                    label = "Weak";
+                    break;
+                case 2:
+                    color = "bg-warning";
+                    label = "Moderate";
+                    break;
+                case 3:
+                    color = "bg-info";
+                    label = "Strong";
+                    break;
+                case 4:
+                    color = "bg-success";
+                    label = "Very Strong";
+                    break;
+            }
+
+        bar.className = `progress-bar ${color}`;
+        bar.style.width = `${barWidth}%`;
+        text.textContent = label;
+        }
+    </script>
+} *@

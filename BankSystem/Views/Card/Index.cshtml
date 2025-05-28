@@ -1,0 +1,198 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var role = ViewContext.HttpContext.Session.GetString("Role");
+    var revealed = TempData["CardId"] as int?;
+    var fullNum = TempData["FullCardNumber"] as string;
+    var err = TempData["Error"] as string;
+}
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Yrsa:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
+</head>
+<style>
+    body{
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* background: linear-gradient(135deg, #003366 0%, #764ba2 100%); */
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+             background-image: url('../img/c1.jpg');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+  background-attachment: fixed;
+    }
+
+    h2 {
+        margin-top: 6%;
+        font-family: "Berkshire Swash", serif;
+        color:black;
+    }
+
+       .navbar {
+  background-color: #003366;
+ border: 3px solid #FFF2F2;
+  border-radius: 30px;
+  padding: 10px 30px;
+  margin: 20px auto ;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom:6%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+    transform: scale(1.5); /* يكبر اللوجو */
+border-radius: 50%;
+margin-left:160% ;
+}
+
+.logo .highlight {
+  color: #d0d0ff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin:0;
+  padding-right:35%;
+}
+
+.nav-links a {
+  color:#ffffff;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-family: "Tagesschrift", system-ui;
+  font-size:1.2rem;
+  text-decoration: none;
+
+}
+.table{
+    color:black;
+    font-weight:bold;
+    background-color:whitesmoke;
+    margin-top:10%;
+  
+}
+ /* 
+
+    </style>
+
+      <header>
+        <nav class="navbar">
+            <div class="logo">
+             <img src="/img/nav.jpg" alt="Logo" /> 
+            </div>
+            <ul class="nav-links">
+                <a href="/Home/Index">Home</a>
+                <a href="/Home/Careers">Careers</a>
+                <a href="/Home/About">About</a>
+                <a href="/Home/Security">Security</a>
+            </ul>
+           
+        </nav>
+
+    </header>
+<h2>Your Cards</h2>
+
+@if (!string.IsNullOrEmpty(err))
+{
+    <div class="alert alert-danger">@err</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            @if (role == "Employee")
+            {
+                <th>Customer</th>
+            }
+            <th>Number</th>
+            <th>Expires</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                @if (role == "Employee")
+                {
+                    <td>@c.Account.Customer.Name (@c.Account.Customer.Username)</td>
+                }
+                <td>
+                    @if (role == "Employee")
+                    {
+                        @c.CardNumber
+                    }
+                    else
+                    {
+                        @if (revealed == c.Id)
+                        {
+                            @fullNum
+                        }
+                        else
+                        {
+                            @($"**** **** **** {c.CardNumber.Substring(c.CardNumber.Length - 4)}")
+                            <form asp-action="Reveal" method="post" class="d-inline ms-2">
+                                <input type="hidden" name="id" value="@c.Id" />
+                                <input type="password" name="password"
+                                       placeholder="Password"
+                                       class="form-control form-control-sm d-inline w-auto"
+                                       required />
+                                <button type="submit" class="btn btn-link btn-sm">Show</button>
+                            </form>
+                        }
+                    }
+                </td>
+                <td>@c.ExpirationDate</td>
+                <td>
+                    @(c.IsActive ? "Active" : "Inactive")
+                </td>
+                <td>
+                    @if (c.IsActive)
+                    {
+                        <form asp-action="Deactivate" method="post">
+                            <input type="hidden" name="id" value="@c.Id" />
+                            <button class="btn btn-danger btn-sm">Deactivate</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Issue New Card</a>
+@if (role == "Employee")
+{
+    <a asp-controller="Employee" asp-action="Dashboard"
+       class="btn btn-secondary ms-2">
+        ← Back to Dashboard
+    </a>
+}
+else
+{
+    <a asp-controller="Customer" asp-action="Dashboard"
+       class="btn btn-secondary ms-2">
+        ← Back to Dashboard
+    </a>
+}

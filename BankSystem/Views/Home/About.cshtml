@@ -1,0 +1,630 @@
+﻿@{
+    ViewData["Title"] = "About";
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Nexus Bank</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tagesschrift&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7ea1ce;
+            --secondary: #bdd7ee;
+            --deep-blue: #285686;
+            --header-bg: #c3daf4;
+            --footer-bg: #7ea1ce;
+            --footer-light: #c3daf4;
+            --white: #f8f8fa;
+            --text: #19557b;
+            --card-bg: #bdd7eecc;
+        }
+
+        body {
+            margin: 0;
+            background-image: url('../img/c1.jpg');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+            height: 80vh;
+            color: var(--text);
+            font-family: 'Montserrat', Arial, sans-serif;
+            color: var(--text);
+            font-family: 'Montserrat', Arial, sans-serif;
+            background-attachment:fixed;
+        }
+
+
+        .navbar {
+            background-color: #003366;
+            border: 3px solid #FFF2F2;
+            border-radius: 30px;
+            padding: 10px 30px;
+            margin: 10px auto;
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+            .logo img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .logo .highlight {
+                color: #d0d0ff;
+            }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+            .nav-links a {
+                color: white;
+                cursor: pointer;
+                transition: 0.3s;
+                padding: 6px 16px;
+                border-radius: 20px;
+                font-family: "Tagesschrift", system-ui;
+                font-size: 1.2rem;
+                text-decoration: none;
+            }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+            .auth-buttons a {
+                background-color: #FFF2F2;
+                color: #2D336B;
+                border: none;
+                border-radius: 20px;
+                padding: 6px 16px;
+                cursor: pointer;
+                font-family: "Tagesschrift", system-ui;
+            }
+        /* Hero Section */
+        .hero {
+            background:#003366;
+            border-radius: 30px;
+            margin: 36px 32px 0;
+            padding: 0;
+            display: flex;
+            align-items: stretch;
+            overflow: hidden;
+            min-height: 350px;
+        }
+
+        .hero-text {
+            padding: 46px 42px;
+            flex: 2 1 0;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+            .hero-text h2 {
+                font-size: 2.6rem;
+                color: oldlace;
+                font-weight: 800;
+                margin: 6px 0 17px 0;
+                line-height: 1.08;
+            }
+
+            .hero-text small {
+                font-size: 1.1rem;
+                opacity: 0.95;
+                color: #fff;
+            }
+
+        .hero-img {
+            flex: 2 1 0;
+            min-width: 250px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+            .hero-img img {
+                max-width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 0 30px 30px 0;
+            }
+
+        /* Main Section Title */
+        .section-title {
+            font-size: 2.3rem;
+            color: var(--deep-blue);
+            font-weight: 700;
+            margin-left: 60px;
+            margin-top: 70px;
+            line-height: 1;
+            font-family: "Tagesschrift", system-ui;
+        }
+
+        .section-desc {
+            font-size: 1.09rem;
+            margin-left: 60px;
+            margin-top: 14px;
+            margin-bottom: 16px;
+            color: #21507e;
+            opacity: 0.94;
+        }
+
+        /* Mission & Vision */
+        .mission-vision-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: left;
+            gap: 60px;
+            margin: 55px 32px 0 32px;
+        }
+
+        .mv-image {
+            flex: 1 1 330px;
+            min-width: 270px;
+        }
+
+            .mv-image img {
+                width: 100%;
+                border-radius: 30px;
+                max-width: 370px;
+            }
+
+        .mv-mission,
+        .mv-vision {
+            flex: 2 1 390px;
+            min-width: 270px;
+            max-width: 740px;
+            background: none;
+            color: #21507e;
+            font-size: 1.09rem;
+            margin-bottom: 19px;
+            font-family: "Tagesschrift", system-ui;
+        }
+
+        .mv-mission-title,
+        .mv-vision-title {
+            font-size: 1.55rem;
+            color: #fff;
+            background: var(--primary);
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            padding: 0 14px;
+            border-radius: 5px;
+            display: inline-block;
+            font-family: "Tagesschrift", system-ui;
+        }
+
+        .mv-line {
+            border-left: 3px solid var(--primary);
+            margin-left: 15px;
+            padding-left: 16px;
+        }
+        /* Vision row: text then image on right */
+        .mv-vision-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
+            align-items: flex-start;
+            margin: 52px 0 0 0;
+            justify-content: flex-start;
+        }
+
+        .mv-vision-image {
+            flex: 1 1 270px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+            .mv-vision-image img {
+                border-radius: 20px;
+                max-width: 340px;
+                width: 100%;
+            }
+
+        .mv-vision {
+            flex: 2 1 390px;
+            min-width: 280px;
+        }
+
+        /* Press Releases */
+        .press-section {
+            margin: 68px 0 0 0;
+        }
+
+        .press-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 44px;
+            margin: 0 38px 30px 0;
+        }
+
+        .press-card {
+            background: #003366;
+            border-radius: 18px;
+            box-shadow: 0 3px 24px #7ea1ce21;
+            padding: 36px 26px 26px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        .press-image {
+            width: 100%;
+            aspect-ratio: 2/1.15;
+            border-radius: 14px;
+            object-fit: cover;
+            margin-bottom: 14px;
+        }
+
+        .press-title {
+            font-size: 1.22rem;
+            color: oldlace;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .press-tags {
+            display: flex;
+            gap: 17px;
+            margin-bottom: 12px;
+        }
+
+        .press-tag {
+            background: #7ea1cecc;
+            color: #fff;
+            border-radius: 22px;
+            padding: 6px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .press-content {
+            color: oldlace;
+            font-size: 1.02rem;
+            opacity: 0.98;
+            font-family: "Tagesschrift", system-ui;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: -100%;
+        }
+
+            .footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+                pointer-events: none;
+            }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .flogo {
+            background: rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .bank-name {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+            .contact-item:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid transparent;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .footer-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+    </style>
+</head>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <!-- <img src="logo.png" alt="Logo" /> -->
+            <span>NexusBank</span>
+        </div>
+        <ul class="nav-links">
+            <a href="/Home/Index">Home</a>
+            <a href="/Home/Careers">Careers</a>
+            <a href="/Home/About">About</a>
+            <a href="/Home/Security">Security</a>
+        </ul>
+        <div class="auth-buttons">
+            <a class="btn" href="/Account/Register">Sign Up</a>
+            <a class="btn" href="/Account/Login">Login</a>
+        </div>
+    </nav>
+
+</header>
+<body>
+   
+    <!-- Hero/Welcome Section -->
+    <div class="hero">
+        <div class="hero-text">
+            <small>Welcome to Nexus Bank</small>
+            <h2>Where Banking Meets<br>Excellence!</h2>
+            <div>
+                At NEXUS BANK, we believe that banking should be more than just transactions.
+                It should be an experience that empowers individuals and businesses to thrive and reach their financial goals.
+                As a trusted financial institution, we are committed to delivering exceptional banking services that go beyond expectations.
+                With a focus on innovation, personalized solutions, and unwavering integrity, we strive to provide the best banking experience for our valued customers.
+                Join us on this exciting journey and discover a new level of banking excellence.
+            </div>
+        </div>
+        <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" alt="Banker">
+        </div>
+    </div>
+    <!-- Mission & Vision Section -->
+    <h2 class="section-title">Mission & Vision</h2>
+    <div class="section-desc">
+        We envision being a leading force in the industry, driven by innovation, integrity, and inclusivity, creating a brighter financial future for individuals and businesses while maintaining a strong commitment to customer satisfaction and community development
+    </div>
+    <div class="mission-vision-section" style="margin-bottom: 0;">
+        <div class="mv-image">
+            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=420&q=80" alt="Growth">
+        </div>
+        <div class="mv-mission mv-line">
+            <span class="mv-mission-title">Mission</span>
+            <div style="margin-top:12px;">
+                At Nexus Bank, our mission is to empower our customers to achieve financial success.
+                We are dedicated to delivering innovative banking solutions that cater to their unique needs.
+                Through personalized services, expert guidance, and cutting-edge technology, we aim to build strong, lasting relationships with our customers.
+                Our mission is to be their trusted partner, helping them navigate their financial journey and realize their dreams.
+            </div>
+        </div>
+    </div>
+    <div class="mv-vision-wrap" style="margin-left: 32px;">
+        <div class="mv-vision mv-line">
+            <span class="mv-vision-title">Vision</span>
+            <div style="margin-top:12px;">
+                Our vision at Nexus Bank is to redefine banking by creating a seamless and personalized experience for our customers.
+                We envision a future where banking is accessible, transparent, and tailored to individual preferences.
+                Through continuous innovation and collaboration, we strive to be at the forefront of the industry, setting new standards for customer-centric banking.
+                Our vision is to be the preferred financial institution, known for our unwavering commitment to excellence, trust, and customer satisfaction.
+            </div>
+        </div>
+        <div class="mv-vision-image">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=420&q=80" alt="Vision">
+        </div>
+    </div>
+    <!-- Press Releases/News Section -->
+    <h2 class="section-title press-section">Press Releases</h2>
+    <div class="section-desc">Stay updated with the latest happenings and exciting developments at Nexus Bank through our press releases.</div>
+    <div class="press-container">
+        <!-- Copy each press card from your HTML; they're static -->
+        <div class="press-card">
+            <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=600&q=80" class="press-image" alt="Press 1">
+            <div class="press-title">Nexus Bank Launches New Rewards Program to Enhance Customer Loyalty and Satisfaction</div>
+            <div class="press-tags">
+                <span class="press-tag">Location: Egypt</span>
+                <span class="press-tag">Date: 06/11/2025</span>
+            </div>
+            <div class="press-content">Nexus Bank is pleased to announce the introduction of our new Rewards Program, aimed at rewarding our loyal customers and enhancing their banking experience. The program offers exclusive benefits, discounts, and personalized offers tailored to individual customer preferences. With this initiative, Nexus Bank reaffirms its commitment to delivering exceptional value and building lasting relationships with our valued customers.</div>
+        </div>
+        <div class="press-card">
+            <img src="~/img/c15.jpg" class="press-image" alt="Press 2">
+            <div class="press-title">Nexus Bank Expands Branch Network with Opening of New Location in Alex</div>
+            <div class="press-tags">
+                <span class="press-tag">Location: Egypt</span>
+                <span class="press-tag">Date: 12/11/2025</span>
+            </div>
+            <div class="press-content">Nexus Bank is excited to announce the grand opening of our newest branch in [City]. This expansion is a testament to our continued commitment to serving our customers and providing them with convenient access to our comprehensive range of banking services. The new branch will feature state-of-the-art facilities, a team of dedicated professionals, and a personalized approach to banking, further strengthening our presence in the local community.</div>
+        </div>
+        <div class="press-card">
+            <img src="~/img/c16.jpg" class="press-image" alt="Press 3">
+            <div class="press-title">Nexus Bank Partners with Local Nonprofit to Support Financial Education Initiatives</div>
+            <div class="press-tags">
+                <span class="press-tag">Location: Egypt</span>
+                <span class="press-tag">Date: 24/12/2025</span>
+            </div>
+            <div class="press-content">
+                Nexus Bank is excited to unveil our new Sustainable Banking Initiative, demonstrating our commitment to environmental responsibility. This initiative includes a range of sustainable banking products and services, such as green loans, eco-friendly investment options, and paperless banking solutions. By incorporating sustainable practices into our operations, we aim to contribute to a greener future while providing innovative banking solutions to our customers.
+            </div>
+        </div>
+        <div class="press-card">
+            <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=600&q=80" class="press-image" alt="Press 4">
+            <div class="press-title">Nexus Bank Launches Sustainable Banking Initiative to Promote Environmental Responsibility</div>
+            <div class="press-tags">
+                <span class="press-tag">Location: Egypt</span>
+                <span class="press-tag">Date: 28/12/2025</span>
+            </div>
+            <div class="press-content">
+                Nexus Bank is excited to unveil our new Sustainable Banking Initiative, demonstrating our commitment to environmental responsibility. This initiative includes a range of sustainable banking products and services, such as green loans, eco-friendly investment options, and paperless banking solutions. By incorporating sustainable practices into our operations, we aim to contribute to a greener future while providing innovative banking solutions to our customers.
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-top">
+                    <div class="logo-section">
+                        <div class="flogo">NB</div>
+                        <h2 class="bank-name">Nexus Bank</h2>
+                    </div>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                            <span>Nexus@gmail.com</span>
+                        </div>
+
+                        <div class="contact-item">
+                            <svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                            </svg>
+                            <span>+20 1300000000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © 2025 Bank All Rights Reserved
+                </div>
+
+                <div class="footer-links">
+                    <a href="/Home/Privacy">Privacy</a>
+                    <div class="divider"></div>
+                    <a href="/Home/Terms">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

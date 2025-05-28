@@ -1,0 +1,171 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+@{
+    ViewData["Title"] = "Employee Dashboard";
+    var role = ViewContext.HttpContext.Session.GetString("Role");
+}
+<style>
+    body{
+        min-height: 100vh;
+        font-family: 'Arial', sans-serif;
+        background-image: url('../img/c1.jpg');
+        background-size: cover;
+        background-repeat: repeat;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .btn{
+        color:black;
+    }
+</style>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-secondary">👨‍💼 Employee Dashboard</h2>
+            <p class="text-muted">Overview of system statistics and quick actions</p>
+        </div>
+        <div>
+            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats cards -->
+    <div class="row text-center">
+        <div class="col-md-3 mb-4">
+            <div class="card bg-secondary text-white shadow">
+                <div class="card-header fw-semibold">Total Customers</div>
+                <div class="card-body">
+                    <h1 class="display-5">@ViewBag.TotalCustomers</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card bg-secondary text-white shadow">
+                <div class="card-header fw-semibold">Total Accounts</div>
+                <div class="card-body">
+                    <h1 class="display-5">@ViewBag.TotalAccounts</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card bg-secondary text-white shadow">
+                <div class="card-header fw-semibold">Total Cards</div>
+                <div class="card-body">
+                    <h1 class="display-5">@ViewBag.TotalCards</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card bg-secondary text-white shadow">
+                <div class="card-header fw-semibold">Total Balance</div>
+                <div class="card-body">
+                    <h1 class="display-5">@ViewBag.TotalBalance.ToString("C")</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick actions in column -->
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="d-grid gap-3">
+                <div>
+                    <a asp-action="ManageAccounts" class="btn btn-outline-secondary btn-lg w-100">
+                        🗂️ Manage Accounts
+                    </a>
+                    <p class="text-muted small mt-1">Create, view, and manage customer bank accounts</p>
+                </div>
+
+                <div>
+                    <a asp-controller="Appointment" asp-action="ManageAppointments"
+                       class="btn btn-outline-secondary btn-lg w-100">
+                        📅 Manage Appointments
+                    </a>
+                    <p class="text-muted small mt-1">Schedule and manage customer appointments</p>
+                </div>
+
+                <div>
+                    <a asp-controller="Card" asp-action="Index" class="btn btn-outline-secondary btn-lg w-100">
+                        💳 Manage Cards
+                    </a>
+                    <p class="text-muted small mt-1">Issue and manage customer credit/debit cards</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <!-- Average balance -->
+            <div class="card text-center shadow-sm mb-4">
+                <div class="card-header">Average Account Balance</div>
+                <div class="card-body">
+                    <h2>
+                        @(
+                            ((decimal)ViewBag.AverageBalance)
+                            .ToString("C")
+                            )
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Reporting charts -->
+            <h3 class="mt-4">📊 Reporting</h3>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header">New Accounts (last 12 mo.)</div>
+                        <div class="card-body">
+                            <canvas id="accountsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header">Deposits vs Withdrawals</div>
+                        <div class="card-body">
+                            <canvas id="txnChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Pull in the data from ViewBag
+            const accountsData = @Html.Raw(JsonSerializer.Serialize(ViewBag.AccountsChartData));
+            const pieData = @Html.Raw(JsonSerializer.Serialize(ViewBag.TxnPieData));
+
+            // 1) Bar chart: new accounts/month
+            new Chart(document.getElementById('accountsChart'), {
+                type: 'bar',
+                data: {
+                    labels: accountsData.map(d => d.Label),
+                    datasets: [{
+                        label: 'New Accounts',
+                        data: accountsData.map(d => d.Count),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // 2) Doughnut chart: deposits vs withdrawals
+            new Chart(document.getElementById('txnChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: pieData.map(d => d.Label),
+                    datasets: [{
+                        data: pieData.map(d => d.Value),
+                        hoverOffset: 4
+                    }]
+                }
+            });
+        </script>
+    }
+</div>
