@@ -1,0 +1,8 @@
+[build]
+builder = "nixpacks"
+
+[build.nixpacks]
+providers = ["csharp"]
+
+[deploy]
+startCommand = "dotnet NEXUS_BANK.dll"
